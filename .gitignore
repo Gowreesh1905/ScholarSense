@@ -1,0 +1,63 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---------- Virtual environments ----------
+venv/
+.venv/
+env/
+ENV/
+.python-version
+
+# ---------- Jupyter ----------
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+.jupyter/
+# NOTE: notebook outputs are intentionally committed — the executed
+# demo runs are part of the deliverable, so *.ipynb is NOT ignored.
+
+# ---------- Model / embedding artifacts ----------
+# Downloaded or trained models and cached vectors are large and
+# fully reproducible from the code, so they stay out of git.
+*.model
+*.model.*
+*.kv
+*.npy
+*.npz
+*.bin
+*.pt
+*.pth
+*.safetensors
+gensim-data/
+nltk_data/
+.cache/
+models/
+
+# Hugging Face / sentence-transformers download caches (SPECTER)
+.huggingface/
+huggingface/
+transformers_cache/
+sentence_transformers/
+
+# ---------- Editors & IDEs ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- Misc ----------
+*.log
+.env
+.env.local
