@@ -34,17 +34,74 @@ ScholarSense/
 ├── abstract_sentences.csv          ← Dataset (Scholar Inbox authors)
 │
 ├── tfidf_lexical_search.py         ← TF-IDF module (Member 1)
-├── word2vec_static_search.py       ← Word2Vec module (Member 2)  [reference]
+├── word2vec_static_search.py       ← Word2Vec module (Member 2)  [reference, needs gensim]
+├── word2vec_pytorch_search.py      ← Word2Vec, inline PyTorch version (no gensim needed)
 ├── bert_specter_contextual_search.py ← BERT module (Member 3)
 │
-└── main_search_engine.py           ← YOUR FILE — orchestrator + interactive CLI
+├── main_search_engine.py           ← Orchestrator + interactive CLI
+│
+├── backend/                        ← FastAPI web API (wraps the same 3 searchers)
+│   ├── engine.py                   ← Loads corpus, builds/caches all 3 searchers
+│   ├── app.py                      ← REST API: /api/health, /api/search
+│   └── requirements.txt
+│
+└── frontend/                       ← React + Vite + TypeScript + Tailwind web UI
 ```
 
-> **Note:** `word2vec_static_search.py` uses `gensim`, which requires Microsoft C++ Build Tools to install on Python 3.14. The `main_search_engine.py` includes an **inline PyTorch Word2Vec implementation** as a drop-in replacement that works without any extra installation.
+> **Note:** `word2vec_static_search.py` uses `gensim`, which requires Microsoft C++ Build Tools to install on Python 3.14. `word2vec_pytorch_search.py` is a drop-in replacement that works without any extra installation — both the CLI and the web backend use it.
 
 ---
 
-## Setup
+## Web UI (recommended)
+
+A browser-based search UI that queries all three methods at once and shows
+ranked results side by side, with badges highlighting papers found by
+multiple methods.
+
+**1. Backend (FastAPI) — one-time setup:**
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+**2. Frontend — one-time setup:**
+
+```bash
+cd frontend
+npm install
+```
+
+**3. Run (two terminals):**
+
+```bash
+# Terminal 1 — API server (http://localhost:8000)
+python backend/app.py
+
+# Terminal 2 — web UI (http://localhost:5173)
+cd frontend
+npm run dev
+```
+
+Open **http://localhost:5173** in a browser. The first search after a
+fresh `python backend/app.py` start will be slow (training Word2Vec +
+embedding all abstracts with BERT/SPECTER, same one-time cost as the CLI);
+after that, the trained Word2Vec vectors and BERT corpus embeddings are
+cached to disk under `.cache/`, so subsequent server restarts skip
+straight to "ready."
+
+To sanity-check the API on its own, without the UI:
+
+```bash
+curl http://localhost:8000/api/health
+curl -X POST http://localhost:8000/api/search -H "Content-Type: application/json" -d "{\"query\": \"automatic translation of spoken language\", \"k\": 5}"
+```
+
+---
+
+## CLI (alternative)
+
+The original interactive terminal search still works standalone, with no
+backend/frontend setup required — useful for quick experiments.
 
 ### Prerequisites
 - Python 3.10 – 3.14

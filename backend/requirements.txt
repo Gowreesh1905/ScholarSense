@@ -1,0 +1,16 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.0
+
+# Shared with the CLI (main_search_engine.py) — reused as-is by the API.
+scikit-learn
+nltk
+pandas
+numpy
+sentence-transformers
+
+# NOTE: plain `pip install torch` on Windows resolves to a CPU-only build.
+# For an NVIDIA GPU, install torch separately BEFORE or AFTER this file, e.g.:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu126
+# Re-running `pip install -r requirements.txt` after that will NOT downgrade
+# it back to CPU, since torch isn't listed as a plain dependency here.
