@@ -68,27 +68,45 @@ def main():
     bert_corpus = bert_searcher.get_corpus_embeddings()
     
     print("\n" + "="*80)
-    print("ALL MODELS READY. STARTING COMPARISON ENGINE!")
-    print("="*80 + "\n")
-    
-    # 5. Define our tricky test query designed to show the vocabulary mismatch
-    # It avoids exact words like "Neural Machine Translation" or "NLP"
-    test_query = "methods for automatic translation of spoken language"
-    print(f"TEST SEARCH QUERY: '{test_query}'\n")
-    
-    # --- Execute TF-IDF ---
-    tfidf_q_emb = tfidf_searcher.get_query_embedding(test_query)
-    display_top_k(tfidf_q_emb, tfidf_corpus, abstracts, k=3, model_name="TF-IDF (Lexical)")
-    
-    # --- Execute Word2Vec ---
-    # w2v_q_emb = w2v_searcher.get_query_embedding(test_query)
-    # display_top_k(w2v_q_emb, w2v_corpus, abstracts, k=3, model_name="Word2Vec (Static Semantic)")
-    
-    # --- Execute BERT ---
-    bert_q_emb = bert_searcher.get_query_embedding(test_query)
-    display_top_k(bert_q_emb, bert_corpus, abstracts, k=3, model_name="BERT Specter (Contextual)")
-    
-    print("Experiment Complete! Observe how TF-IDF relies on exact words, while BERT captures the overarching meaning.")
+    print("ALL MODELS READY. SCHOLAR SENSE INTERACTIVE SEARCH ENGINE")
+    print("="*80)
+    print("Corpus: 727 research papers from Scholar Inbox")
+    print("Type your query and press Enter. Type 'exit' to quit.")
+    print("-"*80 + "\n")
+
+    # --- Interactive query loop ---
+    # Models are already loaded above — this loop reuses them for every query.
+    # Only the query embedding is recomputed each time (fast).
+    while True:
+        try:
+            query = input("🔍 Search Query: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting. Goodbye!")
+            break
+
+        if not query:
+            print("  (empty query — please type something)\n")
+            continue
+
+        if query.lower() == "exit":
+            print("Exiting. Goodbye!")
+            break
+
+        print()
+
+        # --- TF-IDF ---
+        tfidf_q_emb = tfidf_searcher.get_query_embedding(query)
+        display_top_k(tfidf_q_emb, tfidf_corpus, abstracts, k=3, model_name="TF-IDF (Lexical)")
+
+        # --- Word2Vec (uncomment once gensim is installed) ---
+        # w2v_q_emb = w2v_searcher.get_query_embedding(query)
+        # display_top_k(w2v_q_emb, w2v_corpus, abstracts, k=3, model_name="Word2Vec (Static Semantic)")
+
+        # --- BERT ---
+        bert_q_emb = bert_searcher.get_query_embedding(query)
+        display_top_k(bert_q_emb, bert_corpus, abstracts, k=3, model_name="BERT Specter (Contextual)")
+
+        print("-"*80 + "\n")
 
 if __name__ == "__main__":
     main()
