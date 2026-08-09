@@ -303,3 +303,103 @@ class TFIDFSearcher:
         ]
 
         return lemmatized_tokens
+
+    # --------------------------------------------------------------
+    # Internal: fit the vectorizer exactly once
+    # --------------------------------------------------------------
+
+    def _ensure_fitted(self):
+        """
+        Fit the TfidfVectorizer on the corpus, if it has not been fit yet.
+
+        This is called automatically by BOTH `get_corpus_embeddings()`
+        and `get_query_embedding()`, so either method can be called
+        first and the vectorizer is still only ever fit ONCE (fitting
+        twice would silently change the vocabulary/IDF weights and
+        break query/corpus comparability).
+        """
+        if self._corpus_embeddings is not None:
+            return  # already fit - nothing to do
+
+        print(f"Fitting TF-IDF vectorizer on {len(self.abstracts)} abstracts "
+              f"(preprocessing happens inside the vectorizer)...")
+
+        # fit_transform() runs `preprocess` on every abstract, builds the
+        # vocabulary/IDF weights from the result, and returns the corpus
+        # matrix in one pass - a second, separate transform pass would be
+        # wasted work.
+        self._corpus_embeddings = self.vectorizer.fit_transform(self.abstracts)
+        self.vector_size = len(self.vectorizer.vocabulary_)
+
+        print(f"TFIDFSearcher fitted with {len(self.abstracts)} abstracts.")
+        print(f"Vocabulary size:     {self.vector_size}")
+        print(f"Embedding dimension: {self.vector_size}  (one dimension per vocabulary term)")
+
+    # --------------------------------------------------------------
+    # Public API
+    # --------------------------------------------------------------
+
+    def get_corpus_embeddings(self):
+        """
+        Generate TF-IDF document vectors for ALL abstracts.
+
+        Pipeline:
+            Raw abstracts → preprocess (tokenizer) → TfidfVectorizer.fit_transform → sparse matrix
+
+        The vectorizer is fit only once; repeated calls return the
+        cached matrix.
+
+        Returns
+        -------
+        scipy.sparse.csr_matrix
+            A 2D SPARSE matrix of shape (n_papers, vector_size).
+            Example: 727 abstracts over a vocabulary of ~4000 terms ->
+            (727, 4000), with the vast majority of entries being 0.0.
+
+        Note
+        ----
+        Unlike Word2Vec/BERT (which return dense NumPy arrays), TF-IDF
+        vectors are naturally sparse - most terms in the vocabulary do
+        not appear in any single abstract. `scipy.sparse` matrices work
+        directly with `sklearn.metrics.pairwise.cosine_similarity`, so
+        no conversion is required downstream. Call `.toarray()` on the
+        result if a dense NumPy array is ever needed instead.
+        """
+        self._ensure_fitted()
+        return self._corpus_embeddings
+
+    def get_query_embedding(self, query_string):
+        """
+        Generate a TF-IDF vector for a single user query.
+
+        The query is tokenized with the EXACT SAME `preprocess` function
+        and projected onto the EXACT SAME (already-fitted) vocabulary as
+        the corpus - `.transform()` is used, never `.fit()`, so a query
+        can never introduce new vocabulary/IDF weights that the corpus
+        vectors don't also have.
+
+        Pipeline:
+            Query → preprocess (tokenizer) → TfidfVectorizer.transform → sparse row vector
+
+        Parameters
+        ----------
+        query_string : str
+            The user's natural-language search query.
+
+        Returns
+        -------
+        scipy.sparse.csr_matrix
+            A SPARSE row vector of shape (1, vector_size). A query whose
+            words are all out-of-vocabulary returns an all-zero row.
+        """
+        # Fitting must have happened already (or happens now, on first
+        # use) - a query can only be projected onto a vocabulary that
+        # already exists.
+        self._ensure_fitted()
+
+        # `.transform` (not `.fit_transform`) reuses the corpus vocabulary/
+        # IDF weights untouched, keeping corpus and query comparable.
+        return self.vectorizer.transform([query_string])
+
+
+print("TFIDFSearcher class defined successfully!")
