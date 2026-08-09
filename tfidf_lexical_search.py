@@ -69,3 +69,40 @@ from nltk.tokenize import word_tokenize          # Splits a sentence into a list
 from sklearn.feature_extraction.text import TfidfVectorizer  # Builds the TF-IDF vocabulary/matrix
 
 print("All libraries imported successfully!")
+
+
+# ============================================================
+# Cell 3 — NLTK Resource Bootstrap
+# ============================================================
+# NLTK ships code, but the data files (tokenizer models, stop-word
+# list, WordNet) must be downloaded once. This helper downloads any
+# missing resource quietly so the class works on a fresh machine.
+#
+# (Kept identical to the Word2Vec developer's bootstrap so both
+# classical-NLP arms of the case study share one preprocessing
+# convention.)
+# ============================================================
+
+# (resource path used by nltk.data.find, package name used by nltk.download)
+_NLTK_RESOURCES = [
+    ("tokenizers/punkt_tab", "punkt_tab"),                                  # sentence/word tokenizer tables
+    ("tokenizers/punkt", "punkt"),                                          # tokenizer (older NLTK versions)
+    ("corpora/stopwords", "stopwords"),                                     # English stop-word list
+    ("corpora/wordnet", "wordnet"),                                         # lexical database used for lemmatization
+    ("corpora/omw-1.4", "omw-1.4"),                                         # WordNet multilingual data (WordNet dependency)
+    ("taggers/averaged_perceptron_tagger_eng", "averaged_perceptron_tagger_eng"),  # POS tagger for POS-aware lemmatization
+]
+
+
+def ensure_nltk_resources():
+    """
+    Download the NLTK data files required for preprocessing, if missing.
+
+    Safe to call repeatedly: a resource that is already present on disk
+    is detected by `nltk.data.find` and is not downloaded again.
+    """
+    for resource_path, package_name in _NLTK_RESOURCES:
+        try:
+            nltk.data.find(resource_path)
+        except LookupError:
+            nltk.download(package_name, quiet=True)
