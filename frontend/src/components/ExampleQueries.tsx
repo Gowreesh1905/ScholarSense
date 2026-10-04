@@ -1,9 +1,11 @@
+// Plain-language queries on topics the 727-paper corpus actually covers (mostly computer
+// vision), worded without the papers' own jargon so vocabulary mismatch shows up.
 const EXAMPLES = [
-  "automatic translation of spoken language",
+  "making blurry photos sharp again",
+  "turning a single photo into a 3D model",
+  "self-driving cars sensing surroundings with laser scanners",
   "teaching robots to grasp unfamiliar objects",
-  "detecting fake news with graph structure",
-  "compressing large language models",
-  "self-supervised representation learning for images",
+  "learning image features without human labels",
 ];
 
 interface ExampleQueriesProps {
