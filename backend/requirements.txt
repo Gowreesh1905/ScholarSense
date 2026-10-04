@@ -2,12 +2,17 @@ fastapi>=0.110
 uvicorn[standard]>=0.29
 pydantic>=2.0
 
-# Shared with the CLI (main_search_engine.py) — reused as-is by the API.
+# Shared with the CLI (main_search_engine.py) and the searchers/ package.
 scikit-learn
 nltk
 pandas
 numpy
 sentence-transformers
+transformers
+rank-bm25
+sentencepiece
+sacremoses
+matplotlib
 
 # NOTE: plain `pip install torch` on Windows resolves to a CPU-only build.
 # For an NVIDIA GPU, install torch separately BEFORE or AFTER this file, e.g.:
