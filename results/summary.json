@@ -1,0 +1,282 @@
+{
+  "generated_at": "2026-10-04T14:38:34",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "corpus_size": 727,
+  "query_sets": {
+    "exact": {
+      "n": 1030,
+      "corpus": "masked",
+      "description": "Task/problem spans copied from each abstract, searched in the masked corpus (all task/problem spans removed). Keeps full word overlap with the paper's remaining text."
+    },
+    "paraphrased": {
+      "n": 1030,
+      "corpus": "masked",
+      "description": "The same spans back-translated English-German-English, searched in the masked corpus. Changes the wording, so vocabulary mismatch appears."
+    }
+  },
+  "rows": [
+    {
+      "method": "tfidf",
+      "label": "TF-IDF",
+      "family": "lexical",
+      "color": "#d97706",
+      "query_set": "exact",
+      "mrr@10": 0.5189,
+      "recall@10": 0.7097,
+      "latency_ms_mean": 2.11,
+      "latency_ms_p95": 3.33
+    },
+    {
+      "method": "tfidf",
+      "label": "TF-IDF",
+      "family": "lexical",
+      "color": "#d97706",
+      "query_set": "paraphrased",
+      "mrr@10": 0.4376,
+      "recall@10": 0.6466,
+      "latency_ms_mean": 2.11,
+      "latency_ms_p95": 3.33
+    },
+    {
+      "method": "bm25",
+      "label": "BM25",
+      "family": "lexical",
+      "color": "#dc2626",
+      "query_set": "exact",
+      "mrr@10": 0.5231,
+      "recall@10": 0.7039,
+      "latency_ms_mean": 2.54,
+      "latency_ms_p95": 5.75
+    },
+    {
+      "method": "bm25",
+      "label": "BM25",
+      "family": "lexical",
+      "color": "#dc2626",
+      "query_set": "paraphrased",
+      "mrr@10": 0.4391,
+      "recall@10": 0.6243,
+      "latency_ms_mean": 2.54,
+      "latency_ms_p95": 5.75
+    },
+    {
+      "method": "word2vec",
+      "label": "Word2Vec (corpus-trained)",
+      "family": "static",
+      "color": "#0891b2",
+      "query_set": "exact",
+      "mrr@10": 0.2722,
+      "recall@10": 0.433,
+      "latency_ms_mean": 0.89,
+      "latency_ms_p95": 1.39
+    },
+    {
+      "method": "word2vec",
+      "label": "Word2Vec (corpus-trained)",
+      "family": "static",
+      "color": "#0891b2",
+      "query_set": "paraphrased",
+      "mrr@10": 0.2148,
+      "recall@10": 0.3621,
+      "latency_ms_mean": 0.89,
+      "latency_ms_p95": 1.39
+    },
+    {
+      "method": "glove",
+      "label": "GloVe 300d (pretrained)",
+      "family": "static",
+      "color": "#059669",
+      "query_set": "exact",
+      "mrr@10": 0.237,
+      "recall@10": 0.4087,
+      "latency_ms_mean": 0.62,
+      "latency_ms_p95": 0.8
+    },
+    {
+      "method": "glove",
+      "label": "GloVe 300d (pretrained)",
+      "family": "static",
+      "color": "#059669",
+      "query_set": "paraphrased",
+      "mrr@10": 0.2083,
+      "recall@10": 0.3631,
+      "latency_ms_mean": 0.62,
+      "latency_ms_p95": 0.8
+    },
+    {
+      "method": "specter",
+      "label": "SPECTER",
+      "family": "contextual",
+      "color": "#9333ea",
+      "query_set": "exact",
+      "mrr@10": 0.2326,
+      "recall@10": 0.3951,
+      "latency_ms_mean": 9.37,
+      "latency_ms_p95": 11.02
+    },
+    {
+      "method": "specter",
+      "label": "SPECTER",
+      "family": "contextual",
+      "color": "#9333ea",
+      "query_set": "paraphrased",
+      "mrr@10": 0.1969,
+      "recall@10": 0.3456,
+      "latency_ms_mean": 9.37,
+      "latency_ms_p95": 11.02
+    },
+    {
+      "method": "bge",
+      "label": "BGE-base",
+      "family": "contextual",
+      "color": "#2563eb",
+      "query_set": "exact",
+      "mrr@10": 0.498,
+      "recall@10": 0.7107,
+      "latency_ms_mean": 10.58,
+      "latency_ms_p95": 18.2
+    },
+    {
+      "method": "bge",
+      "label": "BGE-base",
+      "family": "contextual",
+      "color": "#2563eb",
+      "query_set": "paraphrased",
+      "mrr@10": 0.4615,
+      "recall@10": 0.666,
+      "latency_ms_mean": 10.58,
+      "latency_ms_p95": 18.2
+    },
+    {
+      "method": "hybrid_rrf",
+      "label": "BM25 + BGE (RRF)",
+      "family": "hybrid",
+      "color": "#64748b",
+      "query_set": "exact",
+      "mrr@10": 0.5601,
+      "recall@10": 0.7573,
+      "latency_ms_mean": 17.2,
+      "latency_ms_p95": 34.71
+    },
+    {
+      "method": "hybrid_rrf",
+      "label": "BM25 + BGE (RRF)",
+      "family": "hybrid",
+      "color": "#64748b",
+      "query_set": "paraphrased",
+      "mrr@10": 0.5071,
+      "recall@10": 0.7078,
+      "latency_ms_mean": 17.2,
+      "latency_ms_p95": 34.71
+    },
+    {
+      "method": "hybrid",
+      "label": "Hybrid + re-rank",
+      "family": "hybrid",
+      "color": "#db2777",
+      "query_set": "exact",
+      "mrr@10": 0.5479,
+      "recall@10": 0.766,
+      "latency_ms_mean": 150.46,
+      "latency_ms_p95": 200.73
+    },
+    {
+      "method": "hybrid",
+      "label": "Hybrid + re-rank",
+      "family": "hybrid",
+      "color": "#db2777",
+      "query_set": "paraphrased",
+      "mrr@10": 0.5061,
+      "recall@10": 0.7165,
+      "latency_ms_mean": 150.46,
+      "latency_ms_p95": 200.73
+    }
+  ],
+  "ablation": [
+    "bge",
+    "hybrid_rrf",
+    "hybrid"
+  ],
+  "charts": [
+    {
+      "file": "overlap_vs_mrr.png",
+      "title": "Retrieval quality vs. word overlap",
+      "caption": "MRR@10 per word-overlap bin on 2060 pooled exact and paraphrased queries. From the highest-overlap bin [.8, 1] (n=112) to the lowest [0, .2) (n=326): TF-IDF 0.78 → 0.16, BM25 0.83 → 0.14, BGE-base 0.63 → 0.30, Hybrid + re-rank 0.82 → 0.21."
+    },
+    {
+      "file": "speed_vs_accuracy.png",
+      "title": "Speed vs. accuracy",
+      "caption": "Mean latency against MRR@10 on the paraphrased queries. The most accurate method is BM25 + BGE (RRF) (MRR@10 0.507, 17.2 ms); the fastest is GloVe 300d (pretrained) (0.62 ms, MRR@10 0.208)."
+    },
+    {
+      "file": "ablation.png",
+      "title": "Ablation: fusion and re-ranking",
+      "caption": "MRR@10 of exact: BGE-base 0.498, BM25 + BGE (RRF) 0.560, Hybrid + re-rank 0.548; paraphrased: BGE-base 0.462, BM25 + BGE (RRF) 0.507, Hybrid + re-rank 0.506."
+    },
+    {
+      "file": "results_by_set.png",
+      "title": "MRR@10 by query set",
+      "caption": "MRR@10 for all methods. Best per query set: exact → BM25 + BGE (RRF) (0.560); paraphrased → BM25 + BGE (RRF) (0.507)."
+    }
+  ],
+  "examples": [
+    {
+      "qid": "para-0143",
+      "query": "Embeddings that reconstruct a picture well are not always robust in machining processes.",
+      "query_set": "paraphrased",
+      "relevant_docs": [
+        99
+      ],
+      "ranks": {
+        "tfidf": 64,
+        "bm25": 81,
+        "word2vec": null,
+        "glove": null,
+        "specter": 5,
+        "bge": 1,
+        "hybrid_rrf": 5,
+        "hybrid": 1
+      },
+      "explanation": "The back-translated query ('Embeddings that reconstruct a picture well are not always robust in machining processes') shares only one content word with the paper, 'reconstruct' (overlap 0.125): 'image' became 'picture', and 'editing operations' became the translation error 'machining processes'. TF-IDF and BM25 rank the paper 64th and 81st because 'reconstruct' also appears in many other StyleGAN-inversion abstracts and nothing else matches. BGE ranks it 1st, presumably because it maps 'picture' close to 'image' and matches the overall idea (an embedding that reconstructs well but must also support editing) despite the garbled phrase; the RRF fusion only reaches rank 5 because BM25's poor rank drags it down, and the cross-encoder restores it to 1st."
+    },
+    {
+      "qid": "para-0158",
+      "query": "interpretable directions in the latent space of the pre-trained",
+      "query_set": "paraphrased",
+      "relevant_docs": [
+        114
+      ],
+      "ranks": {
+        "tfidf": 1,
+        "bm25": 1,
+        "word2vec": 70,
+        "glove": 64,
+        "specter": 31,
+        "bge": 53,
+        "hybrid_rrf": 8,
+        "hybrid": 1
+      },
+      "explanation": "This is a short, cut-off fragment ('interpretable directions in the latent space of the pre-trained') and four of its five content words (direction, latent, pretrained, space) appear in the paper (overlap 0.8), so BM25 and TF-IDF both rank it 1st. BGE ranks it only 53rd: a bare noun phrase gives the dense model little to hold on to, and its top three hits are only loosely related (controlling generative factors, visual navigation, coordinate-MLP positional embeddings), while the paper's own text is mostly about self-supervised scale ranking and disentanglement, which the query never mentions. Here the exact words are the strongest evidence, and a keyword method wins where a semantic one is vague; fusion alone (rank 8) did not recover it, but re-ranking did (rank 1)."
+    },
+    {
+      "qid": "para-0132",
+      "query": "Generative Adversarial Networks (GANs) often produce low quality samples near regions with low density of data diversity,",
+      "query_set": "paraphrased",
+      "relevant_docs": [
+        92
+      ],
+      "ranks": {
+        "tfidf": 5,
+        "bm25": 7,
+        "word2vec": 6,
+        "glove": 1,
+        "specter": 20,
+        "bge": 1,
+        "hybrid_rrf": 3,
+        "hybrid": 23
+      },
+      "explanation": "BGE ranks the paper 1st and RRF keeps it 3rd, but the cross-encoder pushes it down to 23rd, so re-ranking makes this query worse. The query ('GANs often produce low quality samples near regions with low density of data diversity') shares only five content words with the masked abstract (data, diversity, produce, quality, sample); the sentence that states the low-density problem is exactly the span that masking removed, so the cross-encoder only sees the rest of the abstract, which talks about underrepresented samples and discrepancy statistics. The cross-encoder (trained on MS MARCO question-passage pairs, scoring each of the top 30 on its own) most likely preferred other GAN-quality abstracts that match the query's wording more directly; the ablation shows this is not a one-off, since re-ranking gives no average gain over RRF (0.506 vs 0.507 MRR@10 on paraphrased)."
+    }
+  ]
+}

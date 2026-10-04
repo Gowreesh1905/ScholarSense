@@ -1,0 +1,17 @@
+{
+  "n": 1030,
+  "mrr@10": {
+    "tfidf": {
+      "full_corpus": 0.962,
+      "masked_corpus": 0.5189
+    },
+    "bm25": {
+      "full_corpus": 0.9723,
+      "masked_corpus": 0.5231
+    },
+    "bge": {
+      "full_corpus": 0.7656,
+      "masked_corpus": 0.498
+    }
+  }
+}
