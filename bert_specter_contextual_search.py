@@ -55,15 +55,21 @@ print("All libraries imported successfully!")
 # Transformer models are computationally intensive.
 # A GPU significantly speeds up embedding generation.
 # If no GPU is available, the model still works on CPU.
+#
+# Both checks below run inside `load_specter()`, which is only called
+# when this file is run directly (see the bottom of the file), so
+# importing BERTSearcher never loads the model a second time.
 # ============================================================
 
-print("PyTorch version:", torch.__version__)
-print("CUDA available: ", torch.cuda.is_available())
+def check_gpu():
+    """Print the PyTorch version and whether a CUDA GPU is available."""
+    print("PyTorch version:", torch.__version__)
+    print("CUDA available: ", torch.cuda.is_available())
 
-if torch.cuda.is_available():
-    print("GPU:            ", torch.cuda.get_device_name(0))
-else:
-    print("Running on CPU  (GPU not detected — this is fine, it will just be slower)")
+    if torch.cuda.is_available():
+        print("GPU:            ", torch.cuda.get_device_name(0))
+    else:
+        print("Running on CPU  (GPU not detected — this is fine, it will just be slower)")
 
 
 # ============================================================
@@ -78,22 +84,28 @@ else:
 # - More appropriate for research-paper search than generic BERT
 # ============================================================
 
-# Select the best available device: GPU if available, otherwise CPU
-device = "cuda" if torch.cuda.is_available() else "cpu"
+def load_specter():
+    """Check the GPU, then load and return the SPECTER model."""
+    check_gpu()
 
-# Load the SPECTER model using sentence-transformers
-# This downloads the model weights on first run (~400 MB)
-model = SentenceTransformer(
-    "allenai/specter",
-    device=device
-)
+    # Select the best available device: GPU if available, otherwise CPU
+    device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# Verify the model loaded correctly and check the embedding dimension
-embedding_dimension = model.get_sentence_embedding_dimension()
+    # Load the SPECTER model using sentence-transformers
+    # This downloads the model weights on first run (~400 MB)
+    model = SentenceTransformer(
+        "allenai/specter",
+        device=device
+    )
 
-print(f"SPECTER model loaded successfully!")
-print(f"Device:              {device}")
-print(f"Embedding dimension: {embedding_dimension}")
+    # Verify the model loaded correctly and check the embedding dimension
+    embedding_dimension = model.get_sentence_embedding_dimension()
+
+    print(f"SPECTER model loaded successfully!")
+    print(f"Device:              {device}")
+    print(f"Embedding dimension: {embedding_dimension}")
+
+    return model
 
 
 # ============================================================
@@ -269,3 +281,5 @@ class BERTSearcher:
 print("BERTSearcher class defined successfully!")
 
 
+if __name__ == "__main__":
+    model = load_specter()
