@@ -1,0 +1,46 @@
+{
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "methods": {
+    "tfidf": {
+      "latency_ms_mean": 2.1088673550457315,
+      "latency_ms_p95": 3.3271899992541876,
+      "n": 200
+    },
+    "bm25": {
+      "latency_ms_mean": 2.538625894985671,
+      "latency_ms_p95": 5.747058999986621,
+      "n": 200
+    },
+    "word2vec": {
+      "latency_ms_mean": 0.8885772299890959,
+      "latency_ms_p95": 1.3899700006732019,
+      "n": 200
+    },
+    "glove": {
+      "latency_ms_mean": 0.6189886599895544,
+      "latency_ms_p95": 0.8039509993977845,
+      "n": 200
+    },
+    "specter": {
+      "latency_ms_mean": 9.366340480100916,
+      "latency_ms_p95": 11.017435001122067,
+      "n": 200
+    },
+    "bge": {
+      "latency_ms_mean": 10.579465959945082,
+      "latency_ms_p95": 18.19813099973544,
+      "n": 200
+    },
+    "hybrid_rrf": {
+      "latency_ms_mean": 17.198246414973255,
+      "latency_ms_p95": 34.706415000982815,
+      "n": 200
+    },
+    "hybrid": {
+      "latency_ms_mean": 150.45795009999892,
+      "latency_ms_p95": 200.7282349986781,
+      "n": 200
+    }
+  }
+}

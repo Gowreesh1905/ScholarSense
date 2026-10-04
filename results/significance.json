@@ -1,0 +1,146 @@
+{
+  "bge - bm25 [exact]": {
+    "diff": -0.0251,
+    "ci95": [
+      -0.0488,
+      -0.0005
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "bm25 - tfidf [exact]": {
+    "diff": 0.0042,
+    "ci95": [
+      -0.0066,
+      0.0152
+    ],
+    "significant": false,
+    "n": 1030
+  },
+  "hybrid_rrf - bge [exact]": {
+    "diff": 0.0621,
+    "ci95": [
+      0.0444,
+      0.0795
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "hybrid_rrf - bm25 [exact]": {
+    "diff": 0.037,
+    "ci95": [
+      0.0197,
+      0.0543
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "hybrid - hybrid_rrf [exact]": {
+    "diff": -0.0122,
+    "ci95": [
+      -0.0332,
+      0.0088
+    ],
+    "significant": false,
+    "n": 1030
+  },
+  "hybrid - bge [exact]": {
+    "diff": 0.0499,
+    "ci95": [
+      0.0263,
+      0.0733
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "bge - specter [exact]": {
+    "diff": 0.2654,
+    "ci95": [
+      0.2384,
+      0.292
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "glove - word2vec [exact]": {
+    "diff": -0.0353,
+    "ci95": [
+      -0.0602,
+      -0.0106
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "bge - bm25 [paraphrased]": {
+    "diff": 0.0225,
+    "ci95": [
+      -0.0032,
+      0.0478
+    ],
+    "significant": false,
+    "n": 1030
+  },
+  "bm25 - tfidf [paraphrased]": {
+    "diff": 0.0015,
+    "ci95": [
+      -0.0084,
+      0.0116
+    ],
+    "significant": false,
+    "n": 1030
+  },
+  "hybrid_rrf - bge [paraphrased]": {
+    "diff": 0.0455,
+    "ci95": [
+      0.0266,
+      0.0641
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "hybrid_rrf - bm25 [paraphrased]": {
+    "diff": 0.068,
+    "ci95": [
+      0.0503,
+      0.0857
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "hybrid - hybrid_rrf [paraphrased]": {
+    "diff": -0.001,
+    "ci95": [
+      -0.0225,
+      0.021
+    ],
+    "significant": false,
+    "n": 1030
+  },
+  "hybrid - bge [paraphrased]": {
+    "diff": 0.0445,
+    "ci95": [
+      0.0198,
+      0.0685
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "bge - specter [paraphrased]": {
+    "diff": 0.2647,
+    "ci95": [
+      0.2402,
+      0.2907
+    ],
+    "significant": true,
+    "n": 1030
+  },
+  "glove - word2vec [paraphrased]": {
+    "diff": -0.0066,
+    "ci95": [
+      -0.0299,
+      0.0167
+    ],
+    "significant": false,
+    "n": 1030
+  }
+}
