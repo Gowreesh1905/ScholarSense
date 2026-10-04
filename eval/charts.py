@@ -139,6 +139,7 @@ def chart_speed(summary, methods, out: Path) -> dict | None:
         ax.annotate(rows[m]["label"], (lat, acc), textcoords="offset points", xytext=(0, dy),
                     ha="center", fontsize=9, color=INK)
     ax.set_xscale("log")
+    ax.set_xlim(0.2, 500)
     ax.set_xlabel("Mean latency per query (ms, log scale)", color=INK, fontsize=10)
     ax.set_ylabel("MRR@10 on the paraphrased queries", color=INK, fontsize=10)
     ax.set_ylim(0, min(1.0, max(p[1] for p in pts) * 1.25))
@@ -159,7 +160,8 @@ def chart_speed(summary, methods, out: Path) -> dict | None:
 # 3 + 4. grouped bars
 # ---------------------------------------------------------------------------
 
-def grouped_bars(summary, methods, sets, out: Path, name: str, title: str, figsize, label_size: int) -> dict[str, float]:
+def grouped_bars(summary, methods, sets, out: Path, name: str, title: str, figsize, label_size: int,
+                 decimals: int = 2) -> dict[str, float]:
     by = {(r["method"], r["query_set"]): r["mrr@10"] for r in summary["rows"]}
     n = len(methods)
     width = 0.8 / n
@@ -171,7 +173,7 @@ def grouped_bars(summary, methods, sets, out: Path, name: str, title: str, figsi
         bars = ax.bar(pos, vals, width * 0.88, color=METHOD_COLORS[m], label=label_of(summary, m))
         for b, v in zip(bars, vals):
             if not np.isnan(v):
-                ax.text(b.get_x() + b.get_width() / 2, v + 0.01, f"{v:.2f}", ha="center", va="bottom",
+                ax.text(b.get_x() + b.get_width() / 2, v + 0.01, f"{v:.{decimals}f}", ha="center", va="bottom",
                         fontsize=label_size, color=INK)
     ax.set_xticks(x, [f"{s}\n(n = {summary['query_sets'][s]['n']})" for s in sets])
     ax.set_ylabel("MRR@10", color=INK, fontsize=10)
@@ -207,7 +209,7 @@ def main() -> None:
     if len(ablation) >= 2:
         by = grouped_bars(summary, ablation, sets, out, "ablation.png",
                           "Ablation: dense only → + BM25 fusion (RRF) → + cross-encoder re-rank",
-                          (8.5, 5), 9)
+                          (8.5, 5), 9, decimals=3)
         caption = "MRR@10 of " + "; ".join(f"{s}: " + describe(by, ablation, labels, s) for s in sets) + "."
         charts.append({"file": "ablation.png", "title": "Ablation: fusion and re-ranking", "caption": caption})
 

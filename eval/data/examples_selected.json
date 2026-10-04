@@ -1,0 +1,14 @@
+[
+  {
+    "qid": "para-0143",
+    "explanation": "The back-translated query ('Embeddings that reconstruct a picture well are not always robust in machining processes') shares only one content word with the paper, 'reconstruct' (overlap 0.125): 'image' became 'picture', and 'editing operations' became the translation error 'machining processes'. TF-IDF and BM25 rank the paper 64th and 81st because 'reconstruct' also appears in many other StyleGAN-inversion abstracts and nothing else matches. BGE ranks it 1st, presumably because it maps 'picture' close to 'image' and matches the overall idea (an embedding that reconstructs well but must also support editing) despite the garbled phrase; the RRF fusion only reaches rank 5 because BM25's poor rank drags it down, and the cross-encoder restores it to 1st."
+  },
+  {
+    "qid": "para-0158",
+    "explanation": "This is a short, cut-off fragment ('interpretable directions in the latent space of the pre-trained') and four of its five content words (direction, latent, pretrained, space) appear in the paper (overlap 0.8), so BM25 and TF-IDF both rank it 1st. BGE ranks it only 53rd: a bare noun phrase gives the dense model little to hold on to, and its top three hits are only loosely related (controlling generative factors, visual navigation, coordinate-MLP positional embeddings), while the paper's own text is mostly about self-supervised scale ranking and disentanglement, which the query never mentions. Here the exact words are the strongest evidence, and a keyword method wins where a semantic one is vague; fusion alone (rank 8) did not recover it, but re-ranking did (rank 1)."
+  },
+  {
+    "qid": "para-0132",
+    "explanation": "BGE ranks the paper 1st and RRF keeps it 3rd, but the cross-encoder pushes it down to 23rd, so re-ranking makes this query worse. The query ('GANs often produce low quality samples near regions with low density of data diversity') shares only five content words with the masked abstract (data, diversity, produce, quality, sample); the sentence that states the low-density problem is exactly the span that masking removed, so the cross-encoder only sees the rest of the abstract, which talks about underrepresented samples and discrepancy statistics. The cross-encoder (trained on MS MARCO question-passage pairs, scoring each of the top 30 on its own) most likely preferred other GAN-quality abstracts that match the query's wording more directly; the ablation shows this is not a one-off, since re-ranking gives no average gain over RRF (0.506 vs 0.507 MRR@10 on paraphrased)."
+  }
+]
