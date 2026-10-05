@@ -45,10 +45,22 @@ ScholarSense/
 │   ├── app.py                      ← REST API: /api/health, /api/search
 │   └── requirements.txt
 │
-└── frontend/                       ← React + Vite + TypeScript + Tailwind web UI
+├── frontend/                       ← React + Vite + TypeScript + Tailwind web UI
+│
+└── cluster/                        ← Laptop cluster (Dask): builds the 100k-paper index
 ```
 
 > **Note:** `word2vec_static_search.py` uses `gensim`, which requires Microsoft C++ Build Tools to install on Python 3.14. `word2vec_pytorch_search.py` is a drop-in replacement that works without any extra installation — both the CLI and the web backend use it.
+
+---
+
+## Laptop cluster: 100,727 papers
+
+The corpus can be scaled from 727 papers to **100,727** (the 727 + 100,000 arXiv computer-science
+abstracts) to test whether the findings hold at realistic size. Building that index is split
+across several laptops with Dask. Setup, the experiments and where the results go:
+**[cluster/README.md](cluster/README.md)**. Once the index is built, the web UI gets a
+**727 / 100,727 papers** switch and the Results page shows the scale and cluster results.
 
 ---
 
