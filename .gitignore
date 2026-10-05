@@ -66,3 +66,11 @@ desktop.ini
 *.log
 .env
 .env.local
+
+# ---------- Laptop cluster ----------
+# Downloaded corpus and embedding chunks are large and reproducible
+# (cluster/prepare_corpus.py, cluster/build_index.py). Run reports and
+# charts under results/cluster/ and results/scale/ ARE committed.
+cluster/data/
+cluster/output/
+dask-scratch-space/

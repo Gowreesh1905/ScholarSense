@@ -1,0 +1,9 @@
+# Everything the backend needs, plus the cluster tools. Install on every laptop:
+#   pip install -r cluster/requirements.txt
+# dask and distributed must be the SAME version on every laptop (build_index.py checks).
+-r ../backend/requirements.txt
+dask[distributed]==2026.8.0
+distributed==2026.8.0
+bokeh>=3.1          # the live dashboard at http://<laptop A>:8787/status
+pyarrow             # reads the arXiv parquet files (laptop A only)
+scipy               # sparse BM25 index
