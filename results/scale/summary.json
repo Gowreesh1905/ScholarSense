@@ -1,0 +1,151 @@
+{
+  "generated_at": "2026-10-05T13:34:56",
+  "corpus_size": 100727,
+  "n_distractors": 100000,
+  "precision": "fp16",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "query_sets": {
+    "exact": 1030,
+    "paraphrased": 1030
+  },
+  "rows": [
+    {
+      "method": "bm25",
+      "label": "BM25",
+      "color": "#dc2626",
+      "query_set": "exact",
+      "mrr@10_727": 0.5231,
+      "mrr@10_scale": 0.2485,
+      "recall@10_727": 0.7039,
+      "recall@10_scale": 0.3825,
+      "latency_ms_727": 2.54,
+      "latency_ms_scale": 1.33,
+      "latency_ms_p95_scale": 2.45
+    },
+    {
+      "method": "bm25",
+      "label": "BM25",
+      "color": "#dc2626",
+      "query_set": "paraphrased",
+      "mrr@10_727": 0.4391,
+      "mrr@10_scale": 0.1893,
+      "recall@10_727": 0.6243,
+      "recall@10_scale": 0.3058,
+      "latency_ms_727": 2.54,
+      "latency_ms_scale": 1.33,
+      "latency_ms_p95_scale": 2.45
+    },
+    {
+      "method": "specter",
+      "label": "SPECTER",
+      "color": "#9333ea",
+      "query_set": "exact",
+      "mrr@10_727": 0.2326,
+      "mrr@10_scale": 0.076,
+      "recall@10_727": 0.3951,
+      "recall@10_scale": 0.134,
+      "latency_ms_727": 9.37,
+      "latency_ms_scale": 23.79,
+      "latency_ms_p95_scale": 39.89
+    },
+    {
+      "method": "specter",
+      "label": "SPECTER",
+      "color": "#9333ea",
+      "query_set": "paraphrased",
+      "mrr@10_727": 0.1969,
+      "mrr@10_scale": 0.0523,
+      "recall@10_727": 0.3456,
+      "recall@10_scale": 0.1,
+      "latency_ms_727": 9.37,
+      "latency_ms_scale": 23.79,
+      "latency_ms_p95_scale": 39.89
+    },
+    {
+      "method": "bge",
+      "label": "BGE-base",
+      "color": "#2563eb",
+      "query_set": "exact",
+      "mrr@10_727": 0.498,
+      "mrr@10_scale": 0.2125,
+      "recall@10_727": 0.7107,
+      "recall@10_scale": 0.3524,
+      "latency_ms_727": 10.58,
+      "latency_ms_scale": 21.63,
+      "latency_ms_p95_scale": 26.34
+    },
+    {
+      "method": "bge",
+      "label": "BGE-base",
+      "color": "#2563eb",
+      "query_set": "paraphrased",
+      "mrr@10_727": 0.4615,
+      "mrr@10_scale": 0.1797,
+      "recall@10_727": 0.666,
+      "recall@10_scale": 0.3078,
+      "latency_ms_727": 10.58,
+      "latency_ms_scale": 21.63,
+      "latency_ms_p95_scale": 26.34
+    },
+    {
+      "method": "hybrid_rrf",
+      "label": "BM25 + BGE (RRF)",
+      "color": "#64748b",
+      "query_set": "exact",
+      "mrr@10_727": 0.5601,
+      "mrr@10_scale": 0.2617,
+      "recall@10_727": 0.7573,
+      "recall@10_scale": 0.4282,
+      "latency_ms_727": 17.2,
+      "latency_ms_scale": 23.63,
+      "latency_ms_p95_scale": 29.02
+    },
+    {
+      "method": "hybrid_rrf",
+      "label": "BM25 + BGE (RRF)",
+      "color": "#64748b",
+      "query_set": "paraphrased",
+      "mrr@10_727": 0.5071,
+      "mrr@10_scale": 0.2212,
+      "recall@10_727": 0.7078,
+      "recall@10_scale": 0.3524,
+      "latency_ms_727": 17.2,
+      "latency_ms_scale": 23.63,
+      "latency_ms_p95_scale": 29.02
+    },
+    {
+      "method": "hybrid",
+      "label": "Hybrid + re-rank",
+      "color": "#db2777",
+      "query_set": "exact",
+      "mrr@10_727": 0.5479,
+      "mrr@10_scale": 0.2462,
+      "recall@10_727": 0.766,
+      "recall@10_scale": 0.4214,
+      "latency_ms_727": 150.46,
+      "latency_ms_scale": 126.78,
+      "latency_ms_p95_scale": 152.29
+    },
+    {
+      "method": "hybrid",
+      "label": "Hybrid + re-rank",
+      "color": "#db2777",
+      "query_set": "paraphrased",
+      "mrr@10_727": 0.5061,
+      "mrr@10_scale": 0.2157,
+      "recall@10_727": 0.7165,
+      "recall@10_scale": 0.3621,
+      "latency_ms_727": 150.46,
+      "latency_ms_scale": 126.78,
+      "latency_ms_p95_scale": 152.29
+    }
+  ],
+  "charts": [
+    {
+      "file": "scale/mrr_727_vs_scale.png",
+      "title": "MRR@10 at 727 vs. scale",
+      "caption": "Each method's MRR@10 with the 727 papers alone (light) and with 100,000 arXiv distractors added (solid), on the same queries."
+    }
+  ]
+}
