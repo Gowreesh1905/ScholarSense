@@ -67,8 +67,45 @@ class SearchEngine:
 
         defaults = [k for k in DEFAULT_UI_METHODS if k in self.searchers]
         self.default_methods = defaults or list(self.searchers)[:4]
+
+        # corpus key -> {"label", "papers", "searchers"}; "727" is always there,
+        # "scale" only once the laptop cluster has built the index (cluster/build_index.py).
+        self.corpora: dict[str, dict] = {
+            "727": {"label": f"{len(self.papers)} papers", "papers": self.papers, "searchers": self.searchers},
+        }
+        self._build_scale_corpus()
         self._log(f"[engine] Ready: {', '.join(self.searchers)}"
-                  f"{' + aspect' if self.aspect_searcher else ''}")
+                  f"{' + aspect' if self.aspect_searcher else ''}"
+                  f"{' + scale corpus' if 'scale' in self.corpora else ''}")
+
+    def _build_scale_corpus(self):
+        try:
+            from cluster.common import SCALE_METHODS, scale_papers
+            from cluster.index import ready_index
+        except ImportError as exc:
+            self._log(f"[engine] Scale corpus unavailable: {exc}")
+            return
+        manifest = ready_index(("full",))
+        if not manifest:
+            self._log("[engine] No cluster-built index (run cluster/build_index.py); serving 727 papers only.")
+            return
+        papers = scale_papers(manifest["n_distractors"])
+        abstracts = [p.abstract for p in papers]
+        searchers: dict[str, BaseSearcher] = {}
+        for key in SCALE_METHODS:
+            if key not in self.searchers:
+                continue
+            start = time.perf_counter()
+            try:
+                searcher = build_searcher(key)
+                searcher.fit(abstracts)   # reads the cluster-built embeddings/tokens from .cache/
+            except Exception:
+                self._log(f"[engine] scale/{key}: fit FAILED, skipping\n{traceback.format_exc()}")
+                continue
+            searchers[key] = searcher
+            self._log(f"[engine] scale/{key}: fitted on {len(papers):,} papers in {time.perf_counter() - start:.2f}s")
+        if searchers:
+            self.corpora["scale"] = {"label": f"{len(papers):,} papers", "papers": papers, "searchers": searchers}
 
     def _build_aspect_searcher(self):
         try:
@@ -115,14 +152,23 @@ class SearchEngine:
             "default_methods": self.default_methods,
             "aspects": self.aspects,
             "aspect_coverage": self.aspect_searcher.coverage() if self.aspect_searcher else {},
+            "corpora": [
+                {"key": key, "label": c["label"], "size": len(c["papers"]), "methods": list(c["searchers"]),
+                 "default_methods": self.corpus_defaults(key), "aspects": key == "727"}
+                for key, c in self.corpora.items()
+            ],
         }
+
+    def corpus_defaults(self, corpus: str) -> list[str]:
+        available = self.corpora[corpus]["searchers"]
+        return [k for k in self.default_methods if k in available] or list(available)[:4]
 
     # ------------------------------------------------------------------
     # Query
     # ------------------------------------------------------------------
 
-    def _hit(self, rank: int, doc_index: int, score: float, matched_span: dict | None = None) -> dict:
-        paper = self.papers[doc_index]
+    def _hit(self, papers: list, rank: int, doc_index: int, score: float, matched_span: dict | None = None) -> dict:
+        paper = papers[doc_index]
         return {
             "rank": rank,
             "doc_index": doc_index,
@@ -131,24 +177,27 @@ class SearchEngine:
             "url": arxiv_url(paper.arxiv_id),
             "snippet": _snippet(paper.abstract),
             "abstract": paper.abstract,
+            "title": getattr(paper, "title", None),
             "matched_span": matched_span,
         }
 
-    def search(self, query: str, k: int = 5, methods: list[str] | None = None, aspect: str = "all") -> dict:
-        """Callers validate `methods` and `aspect` first (see backend/app.py)."""
+    def search(self, query: str, k: int = 5, methods: list[str] | None = None, aspect: str = "all",
+               corpus: str = "727") -> dict:
+        """Callers validate `methods`, `aspect` and `corpus` first (see backend/app.py)."""
         query = query.strip()
-        methods = methods or self.default_methods
+        papers, searchers = self.corpora[corpus]["papers"], self.corpora[corpus]["searchers"]
+        methods = methods or self.corpus_defaults(corpus)
         total_start = time.perf_counter()
 
         method_results = []
         for key in methods:
             start = time.perf_counter()
-            hits = self.searchers[key].search(query, k)
+            hits = searchers[key].search(query, k)
             took_ms = (time.perf_counter() - start) * 1000
             method_results.append({
                 **self.method_info(key),
                 "took_ms": round(took_ms, 1),
-                "results": [self._hit(r, d, s) for r, (d, s) in enumerate(hits, 1)],
+                "results": [self._hit(papers, r, d, s) for r, (d, s) in enumerate(hits, 1)],
             })
 
         if aspect != "all":
@@ -164,7 +213,7 @@ class SearchEngine:
                 "color": METHOD_COLORS["aspect"],
                 "took_ms": round(took_ms, 1),
                 "results": [
-                    self._hit(r, h.doc_index, h.score,
+                    self._hit(papers, r, h.doc_index, h.score,
                               {"start": h.span_start, "end": h.span_end, "text": h.span_text})
                     for r, h in enumerate(hits, 1)
                 ],
@@ -173,6 +222,7 @@ class SearchEngine:
         return {
             "query": query,
             "aspect": aspect,
+            "corpus": corpus,
             "took_ms": round((time.perf_counter() - total_start) * 1000, 1),
             "methods": method_results,
         }

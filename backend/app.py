@@ -5,7 +5,7 @@ ScholarSense API server.
 
 Serves (see team/CONTRACT.md §6):
     GET  /api/health              -> engine status (corpus, device, methods, aspects)
-    POST /api/search              -> {query, k, methods, aspect} -> ranked results per method
+    POST /api/search              -> {query, k, methods, aspect, corpus} -> ranked results per method
     GET  /api/results             -> results/summary.json (404 until evaluation has run)
     GET  /api/results/files/<f>   -> chart images etc. from results/
 """
@@ -49,6 +49,7 @@ class SearchRequest(BaseModel):
     k: int = Field(default=5, ge=1, le=20)
     methods: Optional[list[str]] = None
     aspect: str = "all"
+    corpus: str = "727"
 
 
 def _ready_engine() -> SearchEngine:
@@ -70,23 +71,29 @@ def search(req: SearchRequest):
     if not query:
         raise HTTPException(400, "Query must not be empty")
 
+    if req.corpus not in eng.corpora:
+        raise HTTPException(400, f"Unknown corpus {req.corpus!r}. Available: {', '.join(eng.corpora)}")
+    available = eng.corpora[req.corpus]["searchers"]
+
     methods = None
     if req.methods is not None:
         methods = list(dict.fromkeys(req.methods))  # drop duplicates, keep order
         if not 1 <= len(methods) <= MAX_METHODS:
             raise HTTPException(400, f"Choose between 1 and {MAX_METHODS} methods (got {len(methods)})")
-        unknown = [m for m in methods if m not in eng.searchers]
+        unknown = [m for m in methods if m not in available]
         if unknown:
             raise HTTPException(
                 400,
-                f"Unknown or unavailable method(s): {', '.join(unknown)}. "
-                f"Available: {', '.join(eng.searchers)}",
+                f"Unknown or unavailable method(s) for the {req.corpus} corpus: {', '.join(unknown)}. "
+                f"Available: {', '.join(available)}",
             )
 
     if req.aspect not in eng.aspects:
         raise HTTPException(400, f"Unknown aspect {req.aspect!r}. Available: {', '.join(eng.aspects)}")
+    if req.aspect != "all" and req.corpus != "727":
+        raise HTTPException(400, "Aspect search uses the labelled spans, so it only works on the 727-paper corpus.")
 
-    return eng.search(query, k=req.k, methods=methods, aspect=req.aspect)
+    return eng.search(query, k=req.k, methods=methods, aspect=req.aspect, corpus=req.corpus)
 
 
 @app.get("/api/results")
