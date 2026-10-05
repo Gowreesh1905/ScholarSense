@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { AspectSelector } from "../components/AspectSelector";
+import { CorpusSwitch } from "../components/CorpusSwitch";
 import { EmptyState } from "../components/EmptyState";
 import { ErrorBanner } from "../components/ErrorBanner";
 import { ExampleQueries } from "../components/ExampleQueries";
@@ -46,23 +47,44 @@ export function SearchPage({ health }: SearchPageProps) {
   const [error, setError] = useState<string | null>(null);
   const [picked, setPicked] = useState<MethodKey[] | null>(null);
   const [aspect, setAspect] = useState("all");
+  const [corpus, setCorpus] = useState("727");
   const requestId = useRef(0);
 
-  const methods = useMemo(() => health?.methods ?? [], [health]);
-  // Columns always appear in the backend's method order, whatever order they were clicked in;
-  // keys the backend doesn't offer are dropped.
-  const inMethodOrder = useCallback(
-    (keys: MethodKey[]) => methods.filter((m) => keys.includes(m.key)).map((m) => m.key),
-    [methods],
-  );
-  // Until the user picks, follow the backend's defaults.
-  const selected = useMemo(() => {
-    const keys = inMethodOrder(picked ?? health?.default_methods ?? []);
-    return keys.length > 0 ? keys : methods.slice(0, 1).map((m) => m.key);
-  }, [picked, health, methods, inMethodOrder]);
-  const aspects = health?.aspects ?? ["all"];
+  const corpora = useMemo(() => health?.corpora ?? [], [health]);
+  const corpusInfo = (key: string) => corpora.find((c) => c.key === key);
+  const activeCorpus = corpusInfo(corpus);
 
-  const executeSearch = useCallback(async (q: string, methodKeys: MethodKey[], aspectName: string) => {
+  // The methods a corpus offers, in the backend's order (the 100k corpus has fewer).
+  const methodsFor = useCallback(
+    (key: string) => {
+      const all = health?.methods ?? [];
+      const info = corpora.find((c) => c.key === key);
+      return info ? all.filter((m) => info.methods.includes(m.key)) : all;
+    },
+    [health, corpora],
+  );
+  // What to search with on a corpus: the user's picks that it offers (columns always in the
+  // backend's order, whatever order they were clicked in); until the user picks, or if none
+  // of the picks exist there, the corpus's defaults.
+  const selectionFor = useCallback(
+    (key: string, pickedKeys: MethodKey[] | null) => {
+      const available = methodsFor(key);
+      const ordered = (keys: MethodKey[]) => available.filter((m) => keys.includes(m.key)).map((m) => m.key);
+      const defaults = corpora.find((c) => c.key === key)?.default_methods ?? health?.default_methods ?? [];
+      const fromPicks = pickedKeys ? ordered(pickedKeys) : [];
+      if (fromPicks.length > 0) return fromPicks;
+      const fromDefaults = ordered(defaults);
+      return fromDefaults.length > 0 ? fromDefaults : available.slice(0, 1).map((m) => m.key);
+    },
+    [methodsFor, corpora, health],
+  );
+
+  const methods = useMemo(() => methodsFor(corpus), [methodsFor, corpus]);
+  const selected = useMemo(() => selectionFor(corpus, picked), [selectionFor, corpus, picked]);
+  const aspects = activeCorpus && !activeCorpus.aspects ? ["all"] : (health?.aspects ?? ["all"]);
+  const corpusSize = activeCorpus?.size ?? health?.corpus_size ?? 727;
+
+  const executeSearch = useCallback(async (q: string, methodKeys: MethodKey[], aspectName: string, corpusKey: string) => {
     const trimmed = q.trim();
     if (!trimmed) return;
 
@@ -75,6 +97,7 @@ export function SearchPage({ health }: SearchPageProps) {
         k: RESULTS_PER_METHOD,
         methods: methodKeys.length > 0 ? methodKeys : undefined,
         aspect: aspectName,
+        corpus: corpusKey,
       });
       if (thisRequest === requestId.current) setResults(response);
     } catch (err) {
@@ -89,17 +112,25 @@ export function SearchPage({ health }: SearchPageProps) {
 
   function handleExamplePick(q: string) {
     setQuery(q);
-    executeSearch(q, selected, aspect);
+    executeSearch(q, selected, aspect, corpus);
   }
 
   function handleMethodsChange(next: MethodKey[]) {
     setPicked(next);
-    if (lastQuery) executeSearch(lastQuery, inMethodOrder(next), aspect);
+    if (lastQuery) executeSearch(lastQuery, selectionFor(corpus, next), aspect, corpus);
   }
 
   function handleAspectChange(next: string) {
     setAspect(next);
-    if (lastQuery) executeSearch(lastQuery, selected, next);
+    if (lastQuery) executeSearch(lastQuery, selected, next, corpus);
+  }
+
+  function handleCorpusChange(next: string) {
+    // Aspect search needs the labelled spans, which only the 727 originals have.
+    const nextAspect = corpusInfo(next)?.aspects === false ? "all" : aspect;
+    setCorpus(next);
+    setAspect(nextAspect);
+    if (lastQuery) executeSearch(lastQuery, selectionFor(next, picked), nextAspect, next);
   }
 
   const overlapIndex = useMemo(() => (results ? buildOverlapIndex(results) : new Map<number, Set<MethodKey>>()), [results]);
@@ -138,7 +169,7 @@ export function SearchPage({ health }: SearchPageProps) {
         {!hasSearched && (
           <div className="mb-8 text-center">
             <h1 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-              Search {health?.corpus_size ?? 727} papers, {methods.length > 0 ? `${methods.length} ways` : "many ways"}.
+              Search {corpusSize.toLocaleString()} papers, {methods.length > 0 ? `${methods.length} ways` : "many ways"}.
             </h1>
             <p className="mx-auto mt-3 max-w-xl text-[15px] text-ink-muted">
               Ask one question and compare up to four methods side by side: keyword matching, word vectors,
@@ -151,9 +182,12 @@ export function SearchPage({ health }: SearchPageProps) {
           <SearchBar
             value={query}
             onChange={setQuery}
-            onSubmit={() => executeSearch(query, selected, aspect)}
+            onSubmit={() => executeSearch(query, selected, aspect, corpus)}
             loading={loading}
           />
+          {corpora.length > 1 && (
+            <CorpusSwitch corpora={corpora} value={corpus} onChange={handleCorpusChange} disabled={loading} />
+          )}
           {methods.length > 0 && (
             <ModelPicker methods={methods} selected={selected} onChange={handleMethodsChange} disabled={loading} />
           )}
@@ -176,7 +210,7 @@ export function SearchPage({ health }: SearchPageProps) {
         </div>
       )}
 
-      {!hasSearched && !loading && <EmptyState methods={methods} corpusSize={health?.corpus_size ?? null} />}
+      {!hasSearched && !loading && <EmptyState methods={methods} corpusSize={corpusSize} />}
 
       {loading && !results && (
         <div className={gridClass}>

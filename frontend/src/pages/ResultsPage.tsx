@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchResults, NoResultsError, resultFileUrl } from "../lib/api";
+import { ChartGrid, Section } from "../components/ResultSection";
+import { fetchResults, NoResultsError } from "../lib/api";
+import { ClusterSection, ScaleSection } from "./ClusterResults";
 import type { ExampleQuery, MethodKey, ResultRow, ResultsSummary } from "../lib/api";
 import { FAMILY_LABELS, methodColor, tint } from "../lib/methodStyles";
 
@@ -202,17 +204,6 @@ function ExampleCard({ example, methods }: { example: ExampleQuery; methods: Met
   );
 }
 
-function Section({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
-  return (
-    <section className="mb-12">
-      <h2 className="font-display text-xl font-semibold tracking-tight text-ink">{title}</h2>
-      {subtitle && <p className="mt-1 mb-4 max-w-3xl text-[13px] leading-relaxed text-ink-muted">{subtitle}</p>}
-      {!subtitle && <div className="mb-4" />}
-      {children}
-    </section>
-  );
-}
-
 export function ResultsPage() {
   const [state, setState] = useState<LoadState>({ kind: "loading" });
 
@@ -316,19 +307,7 @@ export function ResultsPage() {
 
       {summary.charts.length > 0 && (
         <Section title="Charts">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {summary.charts.map((c) => (
-              <figure key={c.file} className="overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
-                <div className="bg-white p-2">
-                  <img src={resultFileUrl(c.file)} alt={c.title} loading="lazy" className="h-auto w-full" />
-                </div>
-                <figcaption className="border-t border-line px-4 py-3">
-                  <p className="text-sm font-medium text-ink">{c.title}</p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-ink-muted">{c.caption}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <ChartGrid charts={summary.charts} />
         </Section>
       )}
 
@@ -341,6 +320,9 @@ export function ResultsPage() {
           </div>
         </Section>
       )}
+
+      <ScaleSection />
+      <ClusterSection />
     </div>
   );
 }

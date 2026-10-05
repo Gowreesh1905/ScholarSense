@@ -3,9 +3,11 @@
 // an arXiv ID and aspect results with matched spans, so every UI state can be seen.
 
 import type {
+  ClusterSummary,
   HealthResponse,
   MethodInfo,
   ResultsSummary,
+  ScaleSummary,
   SearchHit,
   SearchOptions,
   SearchResponse,
@@ -85,7 +87,7 @@ function scoreFor(info: MethodInfo, base: number): number {
   }
 }
 
-function hits(seed: string, k: number, info: MethodInfo, withSpan: boolean): SearchHit[] {
+function hits(seed: string, k: number, info: MethodInfo, withSpan: boolean, withTitle = false): SearchHit[] {
   const scores = seededScores(seed, PAPERS.length);
   const order = PAPERS.map((_, i) => i).sort((a, b) => scores[b] - scores[a]);
   return order.slice(0, k).map((doc_index, i) => {
@@ -98,6 +100,7 @@ function hits(seed: string, k: number, info: MethodInfo, withSpan: boolean): Sea
       url: p.arxiv_id ? `https://arxiv.org/abs/${p.arxiv_id}` : null,
       snippet: p.abstract.length > 300 ? `${p.abstract.slice(0, 300)}…` : p.abstract,
       abstract: p.abstract,
+      title: withTitle && doc_index % 2 === 0 ? `A mock distractor paper title #${doc_index}` : null,
       matched_span: withSpan
         ? { start: p.span[0], end: p.span[1], text: p.abstract.slice(p.span[0], p.span[1]) }
         : null,
@@ -115,16 +118,22 @@ export async function mockFetchHealth(): Promise<HealthResponse> {
     default_methods: ["tfidf", "bm25", "bge", "hybrid"],
     aspects: ["all", "task", "problem", "method", "result"],
     aspect_coverage: { task: 465, problem: 452, method: 640, result: 610 },
+    corpora: [
+      { key: "727", label: "727 papers", size: 727, methods: METHODS.map((m) => m.key), default_methods: ["tfidf", "bm25", "bge", "hybrid"], aspects: true },
+      { key: "scale", label: "100,727 papers", size: 100727, methods: ["bm25", "specter", "bge", "hybrid_rrf", "hybrid"], default_methods: ["bm25", "bge", "hybrid"], aspects: false },
+    ],
   };
 }
 
-export async function mockRunSearch(query: string, { k = 5, methods, aspect = "all" }: SearchOptions): Promise<SearchResponse> {
+export async function mockRunSearch(query: string, { k = 5, methods, aspect = "all", corpus = "727" }: SearchOptions): Promise<SearchResponse> {
   await delay(400);
-  const keys = methods?.length ? methods : ["tfidf", "bm25", "bge", "hybrid"];
+  const scale = corpus !== "727";
+  if (scale && aspect !== "all") throw new Error("Aspect search only works on the 727-paper corpus.");
+  const keys = methods?.length ? methods : scale ? ["bm25", "bge", "hybrid"] : ["tfidf", "bm25", "bge", "hybrid"];
   const results = keys.map((key) => {
     const info = METHODS.find((m) => m.key === key);
     if (!info) throw new Error(`Unknown or unavailable method(s): ${key}`);
-    return { ...info, took_ms: Math.round(Math.random() * 200) / 10, results: hits(query + key, k, info, false) };
+    return { ...info, took_ms: Math.round(Math.random() * 200) / 10, results: hits(query + key + corpus, k, info, false, scale) };
   });
   if (aspect !== "all") {
     const info: MethodInfo = {
@@ -137,7 +146,63 @@ export async function mockRunSearch(query: string, { k = 5, methods, aspect = "a
     };
     results.push({ ...info, took_ms: 4.2, results: hits(query + aspect, k, info, true) });
   }
-  return { query, aspect, took_ms: results.reduce((t, m) => t + m.took_ms, 0), methods: results };
+  return { query, aspect, corpus, took_ms: results.reduce((t, m) => t + m.took_ms, 0), methods: results };
+}
+
+const MOCK_SCALE: ScaleSummary = {
+  generated_at: "2026-10-05T14:00:00",
+  corpus_size: 100727,
+  n_distractors: 100000,
+  precision: "fp16",
+  gpu: "Mock GPU",
+  query_sets: { exact: 1030, paraphrased: 1030 },
+  rows: (["bm25", "specter", "bge", "hybrid_rrf", "hybrid"] as const).flatMap((key) => {
+    const m = METHODS.find((x) => x.key === key)!;
+    return (["exact", "paraphrased"] as const).map((set, i) => ({
+      method: key, label: m.label, color: m.color, query_set: set,
+      "mrr@10_727": [0.52, 0.44][i], "mrr@10_scale": [0.3, 0.24][i],
+      "recall@10_727": [0.7, 0.62][i], "recall@10_scale": [0.45, 0.38][i],
+      latency_ms_727: 3, latency_ms_scale: 12, latency_ms_p95_scale: 20,
+    }));
+  }),
+  charts: [{ file: "scale/mrr_727_vs_scale.png", title: "MRR@10 at 727 vs. scale", caption: "Mock caption." }],
+};
+
+const MOCK_CLUSTER: ClusterSummary = {
+  generated_at: "2026-10-05T14:00:00",
+  scaling: {
+    laptops: ["laptopA", "laptopB", "laptopC"], limit: 30000, precision: "fp16", warmup_s: 22,
+    rows: [
+      { laptops: ["laptopA"], n: 1, seconds: 260, docs_per_s: 115, speedup: 1, efficiency: 1, ideal_speedup: 1, cluster_efficiency: 1 },
+      { laptops: ["laptopB"], n: 1, seconds: 300, docs_per_s: 100, speedup: 0.87, efficiency: 0.87, ideal_speedup: 0.87, cluster_efficiency: 1 },
+      { laptops: ["laptopC"], n: 1, seconds: 290, docs_per_s: 103, speedup: 0.9, efficiency: 0.9, ideal_speedup: 0.9, cluster_efficiency: 1 },
+      { laptops: ["laptopA", "laptopB"], n: 2, seconds: 150, docs_per_s: 200, speedup: 1.73, efficiency: 0.87, serial_fraction: 0.15, ideal_speedup: 1.87, cluster_efficiency: 0.93 },
+      { laptops: ["laptopA", "laptopB", "laptopC"], n: 3, seconds: 108, docs_per_s: 278, speedup: 2.41, efficiency: 0.8, serial_fraction: 0.12, ideal_speedup: 2.77, cluster_efficiency: 0.87 },
+    ],
+  },
+  main_run: {
+    run: "full", texts: 101454, laptops: ["laptopA", "laptopB", "laptopC"], precision: "fp16", compute_s: 330, warmup_s: 25,
+    received_mb: 420, docs_per_s: 307,
+    gpus: { "laptopA-gpu": "RTX 4060", "laptopB-gpu": "RTX 4050", "laptopC-gpu": "RTX 4060" },
+    per_laptop: {
+      laptopA: { embed_chunks: 150, tokenize_chunks: 140, docs_embedded: 37500 },
+      laptopB: { embed_chunks: 120, tokenize_chunks: 130, docs_embedded: 30000 },
+      laptopC: { embed_chunks: 136, tokenize_chunks: 136, docs_embedded: 33954 },
+    },
+    events: [],
+  },
+  fault_run: {
+    run: "demo", texts: 31454, laptops: ["laptopA", "laptopB", "laptopC"], precision: "fp16", compute_s: 140, received_mb: 130, docs_per_s: 224,
+    per_laptop: {}, events: [{ t: 40, event: "left", worker: "laptopB-gpu", laptop: "laptopB" }],
+  },
+  precision_check: { fp16_ok: true, tolerance: 0.005, rows: [{ method: "bge", query_set: "exact", difference: 0.0003 }] },
+  charts: [{ file: "cluster/scaling.png", title: "Speedup on 1 to n laptops", caption: "Mock caption." }],
+};
+
+export function mockResultFile(path: string): unknown {
+  if (path === "scale/summary.json") return MOCK_SCALE;
+  if (path === "cluster/summary.json") return MOCK_CLUSTER;
+  return null;
 }
 
 export async function mockFetchResults(): Promise<ResultsSummary> {

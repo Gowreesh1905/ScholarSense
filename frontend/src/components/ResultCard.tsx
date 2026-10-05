@@ -99,6 +99,8 @@ export function ResultCard({ hit, color, scoreType, scoreRange, foundByOtherMeth
         )}
       </div>
 
+      {hit.title && <h3 className="mb-1.5 text-[13px] font-semibold leading-snug text-ink">{hit.title}</h3>}
+
       <p className="mb-2.5 text-[13px] leading-relaxed text-ink-muted">
         {span ? (
           expanded ? (
