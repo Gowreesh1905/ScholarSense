@@ -7,7 +7,15 @@
 > - **TBD-HW:** the hand-written column (section 5.2). P3 has to re-run `python eval/run_eval.py --sets handwritten`
 >   and `python eval/charts.py` now that `eval/data/queries_handwritten.jsonl` exists, then send the new `summary.md`.
 > - **TBD-FINAL:** if P3's final numbers differ from the ones copied here, update sections 5 and 8.
+> - **TBD-PRF:** section 5.4 (query expansion, `bm25_prf`) uses numbers from P5's own run, not from P3's `summary.json`.
+>   Once P3 re-runs the evaluation with `bm25_prf` available, replace them with the official ones.
 > - Section 6 (aspect search) is qualitative on purpose; see 6.4 for why it has no accuracy number.
+>
+> For checking P3's new run: P5's own scratch run of the same query files and metric reproduced P3's BM25 and TF-IDF
+> numbers exactly. On the 20 hand-written queries it gave MRR@10 / Recall@10 of TF-IDF 0.400 / 0.453, BM25 0.407 / 0.503,
+> Word2Vec 0.408 / 0.324, GloVe 0.379 / 0.358, SPECTER 0.387 / 0.418, BGE 0.900 / 0.868, BM25 + BGE (RRF) 0.738 / 0.719,
+> Hybrid + re-rank 0.818 / 0.750, BM25 + query expansion 0.498 / 0.525. P3's official numbers should match these. If they
+> do, section 5.2 and the hand-written part of the conclusion can be filled with them.
 
 ---
 
@@ -67,6 +75,7 @@ Eight retrieval methods plus aspect search, in four families.
 |---|---|---|
 | Lexical | **TF-IDF** | Sparse bag of lemmatised words, weighted by rarity; cosine similarity. |
 | Lexical | **BM25** | Keyword scoring with term-frequency saturation and length normalisation (k1 = 1.5, b = 0.75). Same tokens as TF-IDF, so the two are directly comparable. |
+| Lexical | **BM25 + query expansion** (extra) | BM25, then the 10 most characteristic words of the top 5 results are added to the query and the search is repeated (pseudo-relevance feedback). Tests whether keyword search can simply be patched (section 5.4). |
 | Static semantic | **Word2Vec (corpus-trained)** | Skip-gram vectors learned from only these 727 abstracts (PyTorch, 100 dimensions, 5 epochs); a document is the average of its word vectors. |
 | Static semantic | **GloVe 300d (pretrained)** | Average of pretrained GloVe vectors (6 billion tokens). Contrasts with Word2Vec: same idea, far more training text. |
 | Contextual | **SPECTER** | Transformer trained on citation links between scientific papers. |
@@ -217,6 +226,30 @@ RRF fusion 17 ms and re-ranking 150 ms.
 - **Re-ranking did not help.** It makes a query about 9 times slower (150 ms against 17 ms) and gives no average gain.
   It does raise Recall@10 slightly (0.766 against 0.757 exact, 0.717 against 0.708 paraphrased).
 
+### 5.4 Can keyword search simply be patched? Query expansion
+
+A natural objection is that keyword search could be fixed with query expansion instead of switching to semantic models.
+`BM25 + query expansion` does this: it runs BM25, treats the top 5 papers as relevant, adds their 10 words with the
+highest frequency × IDF that are not already in the query, and searches again (original words counted twice, new words
+once). The weights are the ones in the project brief and were **not tuned** on the evaluation queries.
+
+**TBD-PRF:** these numbers come from P5's own run of the same query files, corpora and metric as P3's (it reproduced
+P3's BM25 numbers exactly), not from `results/summary.json`. Replace them with P3's once it includes this method.
+
+| Query set | BM25 MRR@10 | BM25 + expansion MRR@10 | Difference (95% CI) | BM25 R@10 | + expansion R@10 |
+|---|---:|---:|---|---:|---:|
+| exact (1,030, masked) | 0.523 | 0.411 | −0.113 [−0.130, −0.095], significant | 0.704 | 0.702 |
+| paraphrased (1,030, masked) | 0.439 | 0.348 | −0.091 [−0.108, −0.075], significant | 0.624 | 0.612 |
+| hand-written (20, full) | 0.407 | 0.498 | +0.091 [−0.038, +0.221], not significant | 0.503 | 0.525 |
+
+Expansion **lowers MRR@10 clearly** on the 1,030-query sets while Recall@10 stays about the same. The right paper is still
+found, but it is pushed down the list, because the added words come from the top 5 results, and these are often not the
+right papers (query drift). For example the query *"making blurry photos sharp again"* has three off-topic papers among
+its first-pass top 5, so besides a useful word (*deblurring*) it adds *caricature*, *exaggeration* and *tourist*. On the
+20 hand-written queries expansion looks
+better, but that set is too small to be sure (the interval includes zero). So **a simple fix of keyword search does not
+close the gap**, at least not with the standard recipe.
+
 ## 6. Aspect search
 
 ### 6.1 What it is
@@ -349,6 +382,8 @@ and example 2). When the right words are present, matching them is a very strong
   0.14 and 0.16. BGE's weakness is the opposite case: it is the weakest of the strong methods when words do match.
 - **Combining the two is better than either.** BM25 + BGE by rank fusion beats both parents significantly on both
   query sets, for 17 ms per query. A cross-encoder re-ranker adds cost but no measured accuracy.
+- **Patching keyword search is not enough (TBD-PRF).** Standard query expansion lowered BM25's MRR@10 by about 0.1 on
+  both span-query sets (section 5.4).
 - **Plain-language queries (TBD-HW).** The hand-written set is the closest to how people search. Fill in the result
   here once P3 has re-run the evaluation: state whether BGE and the hybrid beat keyword search on it, and by how much.
 - **Aspect search** is a useful interface feature when the query reads like a complaint or a result, and a poor

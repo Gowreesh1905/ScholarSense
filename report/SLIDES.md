@@ -52,6 +52,7 @@ slides 7 and 8 and the TBD-HW item on slide 10. Charts are in `results/`.
 - BGE 0.498 → + BM25 by rank fusion 0.560 (significant) → + cross-encoder 0.548 (no gain, within noise)
 - Same pattern on paraphrased queries: 0.462 → 0.507 → 0.506
 - Latency: fusion 17 ms, re-ranking 150 ms (about 9× slower for no measured gain)
+- "Couldn't we just patch keyword search?" Query expansion made BM25 worse: MRR@10 0.523 → 0.411 exact, 0.439 → 0.348 paraphrased (**TBD-PRF**: P5's own run; replace with P3's)
 - *Visual:* `results/ablation.png` beside `results/speed_vs_accuracy.png`.
 
 ## Slide 9. LIVE DEMO 2: aspect search
