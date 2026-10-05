@@ -1,0 +1,39 @@
+{
+  "rows": [
+    {
+      "method": "bge",
+      "query_set": "exact",
+      "mrr@10_fp32": 0.498,
+      "mrr@10_fp16": 0.4983,
+      "difference": 0.0003,
+      "identical_ranks": 0.9757
+    },
+    {
+      "method": "bge",
+      "query_set": "paraphrased",
+      "mrr@10_fp32": 0.4615,
+      "mrr@10_fp16": 0.4617,
+      "difference": 0.0002,
+      "identical_ranks": 0.9767
+    },
+    {
+      "method": "specter",
+      "query_set": "exact",
+      "mrr@10_fp32": 0.2326,
+      "mrr@10_fp16": 0.2323,
+      "difference": -0.0003,
+      "identical_ranks": 0.9602
+    },
+    {
+      "method": "specter",
+      "query_set": "paraphrased",
+      "mrr@10_fp32": 0.1969,
+      "mrr@10_fp16": 0.1966,
+      "difference": -0.0002,
+      "identical_ranks": 0.9699
+    }
+  ],
+  "tolerance": 0.005,
+  "fp16_ok": true,
+  "created": "2026-10-05T12:49:15"
+}
