@@ -1,28 +1,23 @@
-import type { MethodKey } from "../lib/api";
-import { METHOD_STYLES, METHOD_TAGLINE } from "../lib/methodStyles";
-
-const LABELS: Record<MethodKey, string> = {
-  tfidf: "TF-IDF",
-  word2vec: "Word2Vec",
-  bert: "BERT / SPECTER",
-};
+import { tint } from "../lib/methodStyles";
 
 interface LoadingColumnProps {
-  method: MethodKey;
+  label: string;
+  color: string;
   count?: number;
 }
 
-export function LoadingColumn({ method, count = 5 }: LoadingColumnProps) {
-  const style = METHOD_STYLES[method];
-
+export function LoadingColumn({ label, color, count = 5 }: LoadingColumnProps) {
   return (
     <section className="flex min-w-0 flex-1 flex-col">
-      <div className={`mb-3 rounded-xl border ${style.border} ${style.bgSoft} px-4 py-3`}>
+      <div
+        className="mb-3 rounded-xl border px-4 py-3"
+        style={{ borderColor: tint(color, 0x40), backgroundColor: tint(color, 0x14) }}
+      >
         <div className="flex items-center gap-2">
-          <span className={`h-2 w-2 shrink-0 rounded-full ${style.dot}`} />
-          <h2 className="font-display text-[15px] font-semibold text-ink">{LABELS[method]}</h2>
+          <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+          <h2 className="font-display text-[15px] font-semibold leading-snug text-ink">{label}</h2>
         </div>
-        <p className="mt-0.5 text-[11px] text-ink-muted">{METHOD_TAGLINE[method]}</p>
+        <div className="mt-1.5 skeleton h-2.5 w-2/3 rounded" />
       </div>
 
       <div className="flex flex-col gap-3">
