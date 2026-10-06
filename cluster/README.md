@@ -58,8 +58,8 @@ Then, in an **Administrator** PowerShell on every laptop (one time):
 powershell -ExecutionPolicy Bypass -File cluster\open_firewall.ps1
 ```
 
-This allows ports 8786–8787 and 9000–9360 in, on Private networks. If your Wi-Fi adapter
-isn't called "Wi-Fi", pass `-InterfaceAlias "Wi-Fi 2"` (see `Get-NetAdapter`).
+This allows ports 8786–8787 and 9000–9360 in, only from devices on the same local network
+(the hotspot), whatever Windows calls the network. After the demo, `-Remove` closes them again.
 
 On **laptop A only** (the one that will run the scheduler and the backend):
 
@@ -72,8 +72,7 @@ Only laptop A needs the corpus: the cluster sends each worker the abstracts it e
 ## 2. Connect the laptops (on the day)
 
 1. Turn on one phone's **hotspot** and connect all three laptops to it. College Wi-Fi
-   usually blocks laptop-to-laptop traffic. When Windows asks, choose **Private network**,
-   or re-run `open_firewall.ps1` after connecting (it marks the network Private).
+   usually blocks laptop-to-laptop traffic.
 2. **Laptop A**, in a terminal it keeps open:
 
    ```powershell
@@ -170,7 +169,8 @@ Record a backup video of this the day before, in case the hotspot misbehaves.
 | Symptom | Fix |
 |---|---|
 | `Can't reach the scheduler at …:8786` | Same hotspot? `start_scheduler.ps1` running on A? `open_firewall.ps1` run on A (as admin)? Test with `Test-NetConnection 192.168.43.10 -Port 8786`. |
-| Workers connect, but `--check` hangs or tasks never start on B/C | Laptop A can't reach B's/C's worker ports: run `open_firewall.ps1` on B and C too, and make sure the network is Private. |
+| Workers connect, but `--check` hangs or tasks never start on B/C | Laptop A can't reach B's/C's worker ports: run `open_firewall.ps1` (as administrator) on B and C too. |
+| `The argument 'cluster\open_firewall.ps1' … does not exist` | The window isn't in the project folder: `cd /d D:\ScholarSense` first (or give the full path to the script). |
 | `Cluster environment mismatch: … dask … vs …` | Different package versions: `pip install -r cluster/requirements.txt` on that laptop. |
 | `git commit … vs … here` | That laptop isn't on the same commit: `git pull`. (`--allow-commit-mismatch` overrides, at your own risk.) |
 | `GPU worker but PyTorch has no CUDA` | Install the CUDA build of torch (see step 1). |
