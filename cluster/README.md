@@ -155,11 +155,13 @@ Record a backup video of this the day before, in case the hotspot misbehaves.
 
 ## 6. What to say about the results (honestly)
 
-- **Speedup won't be 3×.** Amdahl's law: some work can't be split, such as handing out
-  chunks, sending ~4 KB of embeddings per abstract back to laptop A over the hotspot, and
-  waiting for the last chunk. The table's "serial share" (Karp–Flatt) estimates how much.
 - **The GPUs aren't identical**, so the fair yardstick is "ideal for these GPUs" (the laptops'
-  solo speeds added up), not 3×. "Cluster efficiency" is measured ÷ that ideal.
+  solo speeds added up), not 3×. If the baseline laptop is the slowest, the speedup can even
+  pass 3×; that's the faster GPUs, not magic. "Efficiency" is measured ÷ that ideal.
+- **It won't reach the ideal.** Amdahl's law: some work can't be split, such as handing out
+  chunks, sending ~4 KB of embeddings per abstract back to laptop A over the hotspot, and
+  waiting for the last chunk. The table's "serial share" (Karp–Flatt, using the ideal as the
+  number of processors) estimates how much.
 - **The scheduler is a single point of failure.** Closing laptop A stops the job; closing B
   or C doesn't. A real system would replicate the scheduler.
 - **fp16** is ~3× faster on the GPU and changes MRR@10 by at most ~0.0003 (step a).

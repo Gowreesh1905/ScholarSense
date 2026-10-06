@@ -173,11 +173,11 @@ const MOCK_CLUSTER: ClusterSummary = {
   scaling: {
     laptops: ["laptopA", "laptopB", "laptopC"], limit: 30000, precision: "fp16", warmup_s: 22,
     rows: [
-      { laptops: ["laptopA"], n: 1, seconds: 260, docs_per_s: 115, speedup: 1, efficiency: 1, ideal_speedup: 1, cluster_efficiency: 1 },
-      { laptops: ["laptopB"], n: 1, seconds: 300, docs_per_s: 100, speedup: 0.87, efficiency: 0.87, ideal_speedup: 0.87, cluster_efficiency: 1 },
-      { laptops: ["laptopC"], n: 1, seconds: 290, docs_per_s: 103, speedup: 0.9, efficiency: 0.9, ideal_speedup: 0.9, cluster_efficiency: 1 },
-      { laptops: ["laptopA", "laptopB"], n: 2, seconds: 150, docs_per_s: 200, speedup: 1.73, efficiency: 0.87, serial_fraction: 0.15, ideal_speedup: 1.87, cluster_efficiency: 0.93 },
-      { laptops: ["laptopA", "laptopB", "laptopC"], n: 3, seconds: 108, docs_per_s: 278, speedup: 2.41, efficiency: 0.8, serial_fraction: 0.12, ideal_speedup: 2.77, cluster_efficiency: 0.87 },
+      { laptops: ["laptopA"], n: 1, seconds: 260, docs_per_s: 115, speedup: 1, efficiency: 1, ideal_speedup: 1, naive_efficiency: 1 },
+      { laptops: ["laptopB"], n: 1, seconds: 300, docs_per_s: 100, speedup: 0.87, efficiency: 0.87, ideal_speedup: 0.87, naive_efficiency: 1 },
+      { laptops: ["laptopC"], n: 1, seconds: 290, docs_per_s: 103, speedup: 0.9, efficiency: 0.9, ideal_speedup: 0.9, naive_efficiency: 1 },
+      { laptops: ["laptopA", "laptopB"], n: 2, seconds: 150, docs_per_s: 200, speedup: 1.73, efficiency: 0.87, serial_fraction: 0.15, ideal_speedup: 1.87, naive_efficiency: 0.93 },
+      { laptops: ["laptopA", "laptopB", "laptopC"], n: 3, seconds: 108, docs_per_s: 278, speedup: 2.41, efficiency: 0.8, serial_fraction: 0.12, ideal_speedup: 2.77, naive_efficiency: 0.87 },
     ],
   },
   main_run: {

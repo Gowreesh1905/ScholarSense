@@ -157,7 +157,7 @@ export interface ScalingRow {
   efficiency?: number;
   serial_fraction?: number;
   ideal_speedup?: number;
-  cluster_efficiency?: number;
+  naive_efficiency?: number;
 }
 
 export interface LaptopShare {

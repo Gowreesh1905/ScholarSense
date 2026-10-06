@@ -53,15 +53,19 @@ def scaling_table(runs: dict[str, dict], scaling: dict) -> list[dict]:
                "received_mb": r["received_mb"], "run": r["run"]}
         if t1:
             s = t1 / t
-            row.update({"speedup": round(s, 2), "efficiency": round(s / n, 3)})
-            if n > 1:  # Karp-Flatt: the serial fraction implied by the measured speedup
-                row["serial_fraction"] = round((1 / s - 1 / n) / (1 - 1 / n), 3)
+            # p = how many "baseline laptops" these laptops are worth. With identical machines
+            # p = n; with unequal GPUs (laptopB faster than laptopA, say) the best possible time
+            # is the corpus divided by the laptops' summed solo throughputs, so p = T1 / that.
+            # Speedup / n would then exceed 100% and Karp-Flatt would go negative.
+            p = n
             if all(lap in solo for lap in laptops):
-                # With unequal GPUs, the best possible time is the corpus divided by the
-                # laptops' summed solo throughputs, not T1 / n.
                 ideal_t = r["texts"] / sum(r["texts"] / solo[lap] for lap in laptops)
-                row.update({"ideal_seconds": round(ideal_t, 2), "ideal_speedup": round(t1 / ideal_t, 2),
-                            "cluster_efficiency": round(ideal_t / t, 3)})
+                p = t1 / ideal_t
+                row.update({"ideal_seconds": round(ideal_t, 2), "ideal_speedup": round(p, 2)})
+            row.update({"speedup": round(s, 2), "efficiency": round(s / p, 3),
+                        "naive_efficiency": round(s / n, 3)})
+            if n > 1 and p > 1:  # Karp-Flatt: the serial share implied by the measured speedup
+                row["serial_fraction"] = round((1 / s - 1 / p) / (1 - 1 / p), 3)
         rows.append(row)
     return rows
 
@@ -84,7 +88,7 @@ def plot_scaling(rows: list[dict], scaling: dict, path: Path) -> None:
     ax.plot(ns, [curve[n]["speedup"] for n in ns], "-o", color="#2563eb", lw=2.2, label="measured")
     for n in ns:
         r = curve[n]
-        ax.annotate(f"{r['speedup']:.2f}×\n{r['seconds']:.0f}s, eff {r['efficiency']:.0%}",
+        ax.annotate(f"{r['speedup']:.2f}×\n{r['seconds']:.0f}s, {r['efficiency']:.0%} of ideal",
                     (n, r["speedup"]), textcoords="offset points", xytext=(-10, 10), ha="right", fontsize=8)
     ax.set_xticks(ns)
     ax.set_xlim(min(ns) - 0.3, max(ns) + 0.3)
@@ -192,7 +196,7 @@ def main() -> None:
         best = max((r for r in rows if "speedup" in r), key=lambda r: r["n"], default=None)
         caption = (f"{scaling['limit']:,} abstracts embedded and tokenized on growing sets of laptops. "
                    + (f"All {best['n']} laptops: {best['speedup']:.2f}× faster than {scaling['laptops'][0]} alone "
-                      f"({best['efficiency']:.0%} efficiency)." if best else ""))
+                      f"({best['efficiency']:.0%} of the ideal for these GPUs)." if best else ""))
         summary["charts"].append({"file": "cluster/scaling.png", "title": "Speedup on 1 to n laptops", "caption": caption})
         print(f"scaling.png: {len(rows)} runs")
 

@@ -237,9 +237,8 @@ export function ClusterSection() {
                 <th className={th}>Time</th>
                 <th className={th}>Texts/s</th>
                 <th className={th}>Speedup</th>
-                <th className={th}>Efficiency</th>
                 <th className={th} title="Best possible with these GPUs: the laptops' solo speeds added up">Ideal speedup</th>
-                <th className={th} title="Achieved time vs. the ideal for these GPUs">Cluster eff.</th>
+                <th className={th} title="Measured speedup ÷ ideal speedup for these GPUs">Efficiency</th>
                 <th className={th} title="Karp–Flatt estimate of the share of the job that didn't parallelise">Serial share</th>
               </>
             }
@@ -250,19 +249,19 @@ export function ClusterSection() {
                 <td className={td}>{secs(r.seconds)}</td>
                 <td className={td}>{Math.round(r.docs_per_s)}</td>
                 <td className={`${td} font-semibold text-ink`}>{r.speedup !== undefined ? `${r.speedup.toFixed(2)}×` : "–"}</td>
-                <td className={td}>{pct(r.efficiency)}</td>
                 <td className={td}>{r.ideal_speedup !== undefined ? `${r.ideal_speedup.toFixed(2)}×` : "–"}</td>
-                <td className={td}>{pct(r.cluster_efficiency)}</td>
+                <td className={td}>{pct(r.efficiency)}</td>
                 <td className={td}>{pct(r.serial_fraction)}</td>
               </tr>
             ))}
           </Table>
           <p className="mt-2 max-w-3xl text-[12px] leading-relaxed text-ink-faint">
-            Speedup = time on {scaling.laptops[0]} alone ÷ time on n laptops. Efficiency = speedup ÷ n. The GPUs aren't
-            identical, so "ideal" adds up each laptop's solo speed instead of assuming n×. What stops it reaching ideal is
-            the part that can't be split (Amdahl's law): handing out chunks, sending ~4 KB of embeddings per abstract back
-            to laptop A over the hotspot, and waiting for the last chunk. Models load once per laptop before timing
-            ({secs(scaling.warmup_s)}).
+            Speedup = time on {scaling.laptops[0]} alone ÷ time on several laptops. The GPUs aren't identical, so the
+            ideal isn't n×: it adds up each laptop's solo speed (a faster laptop counts for more than one{" "}
+            {scaling.laptops[0]}). Efficiency = measured ÷ ideal speedup. What stops it reaching the ideal is the part that
+            can't be split (Amdahl's law; "serial share" is the Karp–Flatt estimate of it): handing out chunks, sending
+            ~4 KB of embeddings per abstract back to laptop A over the hotspot, and waiting for the last chunk. Models load
+            once per laptop before timing ({secs(scaling.warmup_s)}).
           </p>
         </div>
       )}
