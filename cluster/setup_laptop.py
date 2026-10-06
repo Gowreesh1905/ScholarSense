@@ -44,8 +44,11 @@ def main() -> None:
         print(f"   {torch.cuda.get_device_name(0)} (CUDA {torch.version.cuda})")
     else:
         ok = False
-        print("   NO CUDA. Install the GPU build of PyTorch:\n"
-              "   pip install torch --index-url https://download.pytorch.org/whl/cu126")
+        print(f"   NO CUDA: torch {torch.__version__} is the CPU-only build (the GPU build ends in +cu126).\n"
+              "   pip won't replace an installed torch, so uninstall it first:\n"
+              "     pip uninstall -y torch torchvision torchaudio\n"
+              "     pip install torch --index-url https://download.pytorch.org/whl/cu126\n"
+              "   If it still says NO CUDA, run `nvidia-smi`: no output means the NVIDIA driver is missing.")
 
     print("\n3. Models (downloaded once, ~1 GB)")
     from sentence_transformers import SentenceTransformer

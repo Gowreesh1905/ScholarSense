@@ -79,8 +79,12 @@ def check_environment(client, view: ClusterView, allow_commit_mismatch: bool = F
     errors, warnings = [], []
     for addr, info in infos.items():
         who = f"{info['worker']} ({info['host']})"
-        if info["python"].rsplit(".", 1)[0] != here["python"].rsplit(".", 1)[0]:
+        if info["python"].split(".")[0] != here["python"].split(".")[0]:
             errors.append(f"{who}: Python {info['python']} vs {here['python']} here")
+        elif info["python"].rsplit(".", 1)[0] != here["python"].rsplit(".", 1)[0]:
+            # e.g. 3.13 vs 3.14 works: task functions are imported from each laptop's own checkout
+            # (never sent as bytecode), and only plain data (text, lists, NumPy arrays) crosses the network.
+            warnings.append(f"{who}: Python {info['python']} vs {here['python']} here (works, but the same version is safer)")
         for pkg in STRICT_VERSIONS:
             if info["packages"][pkg] != here["packages"][pkg]:
                 errors.append(f"{who}: {pkg} {info['packages'][pkg]} vs {here['packages'][pkg]} here")

@@ -43,14 +43,17 @@ git switch cluster            # the same commit on every laptop
 git pull
 
 pip install -r cluster/requirements.txt
-# NVIDIA GPU build of PyTorch, if `python -c "import torch; print(torch.cuda.is_available())"` says False:
+# NVIDIA GPU build of PyTorch, if `python -c "import torch; print(torch.cuda.is_available())"` says False.
+# pip won't replace an installed CPU-only torch ("Requirement already satisfied"), so uninstall it first:
+pip uninstall -y torch torchvision torchaudio
 pip install torch --index-url https://download.pytorch.org/whl/cu126
 
 python cluster/setup_laptop.py   # downloads the models (~1 GB), checks the GPU
 ```
 
 `setup_laptop.py` ends with a **fingerprint** line. Compare it across the three laptops:
-Python, dask, distributed, torch, sentence-transformers and the commit must match.
+dask, distributed and the commit must match. Python may differ in the minor version
+(3.13 vs 3.14 works); torch and sentence-transformers should match but only give a warning.
 
 Then, in an **Administrator** PowerShell on every laptop (one time):
 
