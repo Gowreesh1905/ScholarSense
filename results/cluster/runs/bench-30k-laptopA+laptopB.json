@@ -1,0 +1,2499 @@
+{
+  "run": "bench-30k-laptopA+laptopB",
+  "texts": 30000,
+  "chunk_size": 250,
+  "precision": "fp16",
+  "laptops": [
+    "laptopA",
+    "laptopB"
+  ],
+  "workers": {
+    "laptopA": {
+      "gpu": [
+        "laptopA-gpu"
+      ],
+      "cpu": 4
+    },
+    "laptopB": {
+      "gpu": [
+        "laptopB-gpu"
+      ],
+      "cpu": 4
+    }
+  },
+  "compute_s": 140.02,
+  "first_result_s": 2.84,
+  "embed_stage_s": 140.02,
+  "tokenize_stage_s": 66.26,
+  "received_mb": 118.2,
+  "docs_per_s": 214.2,
+  "per_laptop": {
+    "laptopB": {
+      "embed_chunks": 71,
+      "tokenize_chunks": 81,
+      "embed_busy_s": 135.3,
+      "tokenize_busy_s": 236.21,
+      "docs_embedded": 17750
+    },
+    "laptopA": {
+      "embed_chunks": 49,
+      "tokenize_chunks": 39,
+      "embed_busy_s": 139.76,
+      "tokenize_busy_s": 257.6,
+      "docs_embedded": 12250
+    }
+  },
+  "events": [],
+  "tasks": [
+    {
+      "kind": "embed",
+      "start": 0,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 0.028,
+      "end_s": 3.745,
+      "received_s": 4.414
+    },
+    {
+      "kind": "embed",
+      "start": 250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 0.256,
+      "end_s": 2.466,
+      "received_s": 2.844
+    },
+    {
+      "kind": "embed",
+      "start": 500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 6.526,
+      "end_s": 9.362,
+      "received_s": 9.565
+    },
+    {
+      "kind": "embed",
+      "start": 750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 4.199,
+      "end_s": 6.033,
+      "received_s": 6.375
+    },
+    {
+      "kind": "embed",
+      "start": 1000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 3.749,
+      "end_s": 6.523,
+      "received_s": 6.69
+    },
+    {
+      "kind": "embed",
+      "start": 1250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 2.467,
+      "end_s": 4.198,
+      "received_s": 4.663
+    },
+    {
+      "kind": "embed",
+      "start": 1500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 6.034,
+      "end_s": 8.022,
+      "received_s": 8.263
+    },
+    {
+      "kind": "embed",
+      "start": 1750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 9.365,
+      "end_s": 12.001,
+      "received_s": 12.165
+    },
+    {
+      "kind": "embed",
+      "start": 2000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 8.024,
+      "end_s": 9.702,
+      "received_s": 10.387
+    },
+    {
+      "kind": "embed",
+      "start": 2250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 9.704,
+      "end_s": 11.685,
+      "received_s": 11.917
+    },
+    {
+      "kind": "embed",
+      "start": 2500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 12.004,
+      "end_s": 14.693,
+      "received_s": 14.708
+    },
+    {
+      "kind": "embed",
+      "start": 2750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 11.686,
+      "end_s": 13.679,
+      "received_s": 13.913
+    },
+    {
+      "kind": "embed",
+      "start": 3000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 14.696,
+      "end_s": 17.499,
+      "received_s": 17.509
+    },
+    {
+      "kind": "embed",
+      "start": 3250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 13.681,
+      "end_s": 15.591,
+      "received_s": 16.451
+    },
+    {
+      "kind": "embed",
+      "start": 3500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 15.593,
+      "end_s": 17.507,
+      "received_s": 17.91
+    },
+    {
+      "kind": "embed",
+      "start": 3750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 17.501,
+      "end_s": 20.174,
+      "received_s": 20.198
+    },
+    {
+      "kind": "embed",
+      "start": 4000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 17.509,
+      "end_s": 19.208,
+      "received_s": 19.886
+    },
+    {
+      "kind": "embed",
+      "start": 4250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 20.177,
+      "end_s": 22.94,
+      "received_s": 23.012
+    },
+    {
+      "kind": "embed",
+      "start": 4500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 19.21,
+      "end_s": 21.197,
+      "received_s": 22.041
+    },
+    {
+      "kind": "embed",
+      "start": 4750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 22.943,
+      "end_s": 25.663,
+      "received_s": 25.677
+    },
+    {
+      "kind": "embed",
+      "start": 5000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 21.198,
+      "end_s": 23.012,
+      "received_s": 23.315
+    },
+    {
+      "kind": "embed",
+      "start": 5250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 23.014,
+      "end_s": 24.833,
+      "received_s": 25.11
+    },
+    {
+      "kind": "embed",
+      "start": 5500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 25.667,
+      "end_s": 28.401,
+      "received_s": 28.43
+    },
+    {
+      "kind": "embed",
+      "start": 5750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 24.835,
+      "end_s": 26.605,
+      "received_s": 26.862
+    },
+    {
+      "kind": "embed",
+      "start": 6000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 28.404,
+      "end_s": 31.275,
+      "received_s": 31.404
+    },
+    {
+      "kind": "embed",
+      "start": 6250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 26.607,
+      "end_s": 28.618,
+      "received_s": 28.942
+    },
+    {
+      "kind": "embed",
+      "start": 6500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 28.62,
+      "end_s": 30.501,
+      "received_s": 30.901
+    },
+    {
+      "kind": "embed",
+      "start": 6750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 31.278,
+      "end_s": 34.533,
+      "received_s": 34.701
+    },
+    {
+      "kind": "embed",
+      "start": 7000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 30.503,
+      "end_s": 32.472,
+      "received_s": 33.022
+    },
+    {
+      "kind": "embed",
+      "start": 7250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 34.536,
+      "end_s": 37.781,
+      "received_s": 37.933
+    },
+    {
+      "kind": "embed",
+      "start": 7500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 32.474,
+      "end_s": 34.342,
+      "received_s": 34.591
+    },
+    {
+      "kind": "embed",
+      "start": 7750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 34.343,
+      "end_s": 36.19,
+      "received_s": 36.622
+    },
+    {
+      "kind": "embed",
+      "start": 8000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 37.784,
+      "end_s": 40.583,
+      "received_s": 40.61
+    },
+    {
+      "kind": "embed",
+      "start": 8250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 36.192,
+      "end_s": 38.155,
+      "received_s": 38.744
+    },
+    {
+      "kind": "embed",
+      "start": 8500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 40.587,
+      "end_s": 43.319,
+      "received_s": 43.333
+    },
+    {
+      "kind": "embed",
+      "start": 8750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 38.177,
+      "end_s": 40.013,
+      "received_s": 40.366
+    },
+    {
+      "kind": "embed",
+      "start": 9000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 40.015,
+      "end_s": 41.886,
+      "received_s": 42.441
+    },
+    {
+      "kind": "embed",
+      "start": 9250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 43.322,
+      "end_s": 46.753,
+      "received_s": 46.833
+    },
+    {
+      "kind": "embed",
+      "start": 9500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 41.887,
+      "end_s": 43.813,
+      "received_s": 43.99
+    },
+    {
+      "kind": "embed",
+      "start": 9750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 43.815,
+      "end_s": 45.948,
+      "received_s": 46.399
+    },
+    {
+      "kind": "embed",
+      "start": 10000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 46.755,
+      "end_s": 49.995,
+      "received_s": 50.192
+    },
+    {
+      "kind": "embed",
+      "start": 10250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 45.95,
+      "end_s": 47.992,
+      "received_s": 48.245
+    },
+    {
+      "kind": "embed",
+      "start": 10500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 49.997,
+      "end_s": 52.542,
+      "received_s": 52.829
+    },
+    {
+      "kind": "embed",
+      "start": 10750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 47.994,
+      "end_s": 49.866,
+      "received_s": 50.172
+    },
+    {
+      "kind": "embed",
+      "start": 11000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 49.868,
+      "end_s": 51.762,
+      "received_s": 52.048
+    },
+    {
+      "kind": "embed",
+      "start": 11250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 52.545,
+      "end_s": 55.539,
+      "received_s": 55.715
+    },
+    {
+      "kind": "embed",
+      "start": 11500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 51.763,
+      "end_s": 53.576,
+      "received_s": 53.917
+    },
+    {
+      "kind": "embed",
+      "start": 11750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 55.542,
+      "end_s": 58.411,
+      "received_s": 58.427
+    },
+    {
+      "kind": "embed",
+      "start": 12000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 53.577,
+      "end_s": 55.431,
+      "received_s": 55.622
+    },
+    {
+      "kind": "embed",
+      "start": 12250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 55.433,
+      "end_s": 57.213,
+      "received_s": 57.382
+    },
+    {
+      "kind": "embed",
+      "start": 12500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 58.414,
+      "end_s": 61.411,
+      "received_s": 61.428
+    },
+    {
+      "kind": "embed",
+      "start": 12750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 57.215,
+      "end_s": 59.005,
+      "received_s": 59.261
+    },
+    {
+      "kind": "embed",
+      "start": 13000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 61.415,
+      "end_s": 64.277,
+      "received_s": 64.421
+    },
+    {
+      "kind": "embed",
+      "start": 13250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 59.007,
+      "end_s": 60.947,
+      "received_s": 61.254
+    },
+    {
+      "kind": "embed",
+      "start": 13500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 60.948,
+      "end_s": 62.652,
+      "received_s": 62.912
+    },
+    {
+      "kind": "embed",
+      "start": 13750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 64.28,
+      "end_s": 66.999,
+      "received_s": 67.171
+    },
+    {
+      "kind": "embed",
+      "start": 14000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 62.672,
+      "end_s": 64.797,
+      "received_s": 65.039
+    },
+    {
+      "kind": "embed",
+      "start": 14250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 64.799,
+      "end_s": 66.87,
+      "received_s": 67.081
+    },
+    {
+      "kind": "embed",
+      "start": 14500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 67.002,
+      "end_s": 70.014,
+      "received_s": 70.262
+    },
+    {
+      "kind": "embed",
+      "start": 14750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 66.872,
+      "end_s": 68.718,
+      "received_s": 70.242
+    },
+    {
+      "kind": "embed",
+      "start": 15000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 70.017,
+      "end_s": 73.006,
+      "received_s": 75.915
+    },
+    {
+      "kind": "embed",
+      "start": 15250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 68.72,
+      "end_s": 70.852,
+      "received_s": 72.364
+    },
+    {
+      "kind": "embed",
+      "start": 15500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 73.01,
+      "end_s": 75.73,
+      "received_s": 76.41
+    },
+    {
+      "kind": "embed",
+      "start": 15750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 70.854,
+      "end_s": 72.727,
+      "received_s": 75.894
+    },
+    {
+      "kind": "embed",
+      "start": 16000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 75.732,
+      "end_s": 78.715,
+      "received_s": 78.732
+    },
+    {
+      "kind": "embed",
+      "start": 16250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 72.729,
+      "end_s": 74.677,
+      "received_s": 76.388
+    },
+    {
+      "kind": "embed",
+      "start": 16500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 74.679,
+      "end_s": 76.411,
+      "received_s": 76.677
+    },
+    {
+      "kind": "embed",
+      "start": 16750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 78.718,
+      "end_s": 81.573,
+      "received_s": 81.591
+    },
+    {
+      "kind": "embed",
+      "start": 17000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 76.412,
+      "end_s": 78.335,
+      "received_s": 78.695
+    },
+    {
+      "kind": "embed",
+      "start": 17250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 81.576,
+      "end_s": 84.502,
+      "received_s": 84.515
+    },
+    {
+      "kind": "embed",
+      "start": 17500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 78.336,
+      "end_s": 80.128,
+      "received_s": 80.42
+    },
+    {
+      "kind": "embed",
+      "start": 17750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 80.129,
+      "end_s": 82.001,
+      "received_s": 82.34
+    },
+    {
+      "kind": "embed",
+      "start": 18000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 82.003,
+      "end_s": 84.058,
+      "received_s": 84.269
+    },
+    {
+      "kind": "embed",
+      "start": 18250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 84.505,
+      "end_s": 87.366,
+      "received_s": 87.381
+    },
+    {
+      "kind": "embed",
+      "start": 18500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 84.059,
+      "end_s": 85.797,
+      "received_s": 85.986
+    },
+    {
+      "kind": "embed",
+      "start": 18750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 87.369,
+      "end_s": 90.171,
+      "received_s": 90.186
+    },
+    {
+      "kind": "embed",
+      "start": 19000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 85.799,
+      "end_s": 87.698,
+      "received_s": 88.033
+    },
+    {
+      "kind": "embed",
+      "start": 19250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 87.699,
+      "end_s": 89.689,
+      "received_s": 89.997
+    },
+    {
+      "kind": "embed",
+      "start": 19500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 90.173,
+      "end_s": 92.997,
+      "received_s": 93.013
+    },
+    {
+      "kind": "embed",
+      "start": 19750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 89.691,
+      "end_s": 91.527,
+      "received_s": 91.862
+    },
+    {
+      "kind": "embed",
+      "start": 20000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 93.0,
+      "end_s": 95.837,
+      "received_s": 95.925
+    },
+    {
+      "kind": "embed",
+      "start": 20250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 91.528,
+      "end_s": 93.405,
+      "received_s": 93.824
+    },
+    {
+      "kind": "embed",
+      "start": 20500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 93.407,
+      "end_s": 95.328,
+      "received_s": 95.856
+    },
+    {
+      "kind": "embed",
+      "start": 20750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 95.84,
+      "end_s": 98.64,
+      "received_s": 98.655
+    },
+    {
+      "kind": "embed",
+      "start": 21000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 95.329,
+      "end_s": 97.151,
+      "received_s": 97.83
+    },
+    {
+      "kind": "embed",
+      "start": 21250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 98.643,
+      "end_s": 101.323,
+      "received_s": 101.333
+    },
+    {
+      "kind": "embed",
+      "start": 21500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 97.174,
+      "end_s": 98.93,
+      "received_s": 99.32
+    },
+    {
+      "kind": "embed",
+      "start": 21750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 101.325,
+      "end_s": 104.025,
+      "received_s": 104.043
+    },
+    {
+      "kind": "embed",
+      "start": 22000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 98.932,
+      "end_s": 100.869,
+      "received_s": 101.159
+    },
+    {
+      "kind": "embed",
+      "start": 22250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 100.871,
+      "end_s": 102.713,
+      "received_s": 103.191
+    },
+    {
+      "kind": "embed",
+      "start": 22500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 104.028,
+      "end_s": 106.829,
+      "received_s": 106.845
+    },
+    {
+      "kind": "embed",
+      "start": 22750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 102.715,
+      "end_s": 104.531,
+      "received_s": 105.075
+    },
+    {
+      "kind": "embed",
+      "start": 23000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 104.533,
+      "end_s": 106.405,
+      "received_s": 106.596
+    },
+    {
+      "kind": "embed",
+      "start": 23250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 106.831,
+      "end_s": 109.841,
+      "received_s": 109.856
+    },
+    {
+      "kind": "embed",
+      "start": 23500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 106.407,
+      "end_s": 108.357,
+      "received_s": 108.626
+    },
+    {
+      "kind": "embed",
+      "start": 23750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 109.844,
+      "end_s": 112.508,
+      "received_s": 112.528
+    },
+    {
+      "kind": "embed",
+      "start": 24000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 108.359,
+      "end_s": 110.14,
+      "received_s": 110.488
+    },
+    {
+      "kind": "embed",
+      "start": 24250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 110.143,
+      "end_s": 112.095,
+      "received_s": 112.333
+    },
+    {
+      "kind": "embed",
+      "start": 24500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 112.511,
+      "end_s": 115.443,
+      "received_s": 115.506
+    },
+    {
+      "kind": "embed",
+      "start": 24750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 112.097,
+      "end_s": 113.929,
+      "received_s": 114.134
+    },
+    {
+      "kind": "embed",
+      "start": 25000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 115.494,
+      "end_s": 118.245,
+      "received_s": 118.257
+    },
+    {
+      "kind": "embed",
+      "start": 25250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 113.931,
+      "end_s": 115.883,
+      "received_s": 116.191
+    },
+    {
+      "kind": "embed",
+      "start": 25500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 115.885,
+      "end_s": 118.592,
+      "received_s": 118.913
+    },
+    {
+      "kind": "embed",
+      "start": 25750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 118.247,
+      "end_s": 120.997,
+      "received_s": 121.011
+    },
+    {
+      "kind": "embed",
+      "start": 26000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 118.594,
+      "end_s": 120.497,
+      "received_s": 120.821
+    },
+    {
+      "kind": "embed",
+      "start": 26250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 120.999,
+      "end_s": 123.391,
+      "received_s": 123.402
+    },
+    {
+      "kind": "embed",
+      "start": 26500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 120.499,
+      "end_s": 122.203,
+      "received_s": 122.44
+    },
+    {
+      "kind": "embed",
+      "start": 26750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 123.393,
+      "end_s": 126.507,
+      "received_s": 126.67
+    },
+    {
+      "kind": "embed",
+      "start": 27000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 122.204,
+      "end_s": 124.294,
+      "received_s": 124.512
+    },
+    {
+      "kind": "embed",
+      "start": 27250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 124.296,
+      "end_s": 126.266,
+      "received_s": 126.637
+    },
+    {
+      "kind": "embed",
+      "start": 27500,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 126.511,
+      "end_s": 129.175,
+      "received_s": 129.187
+    },
+    {
+      "kind": "embed",
+      "start": 27750,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 126.268,
+      "end_s": 127.976,
+      "received_s": 128.151
+    },
+    {
+      "kind": "embed",
+      "start": 28000,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 129.178,
+      "end_s": 131.713,
+      "received_s": 131.892
+    },
+    {
+      "kind": "embed",
+      "start": 28250,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 127.978,
+      "end_s": 129.723,
+      "received_s": 129.892
+    },
+    {
+      "kind": "embed",
+      "start": 28500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 129.725,
+      "end_s": 131.661,
+      "received_s": 131.868
+    },
+    {
+      "kind": "embed",
+      "start": 28750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 131.716,
+      "end_s": 134.215,
+      "received_s": 134.236
+    },
+    {
+      "kind": "embed",
+      "start": 29000,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 131.685,
+      "end_s": 133.728,
+      "received_s": 134.031
+    },
+    {
+      "kind": "embed",
+      "start": 29250,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 134.22,
+      "end_s": 137.008,
+      "received_s": 137.021
+    },
+    {
+      "kind": "embed",
+      "start": 29500,
+      "n": 250,
+      "worker": "laptopB-gpu",
+      "laptop": "laptopB",
+      "start_s": 133.73,
+      "end_s": 135.783,
+      "received_s": 135.993
+    },
+    {
+      "kind": "embed",
+      "start": 29750,
+      "n": 250,
+      "worker": "laptopA-gpu",
+      "laptop": "laptopA",
+      "start_s": 137.013,
+      "end_s": 140.012,
+      "received_s": 140.023
+    },
+    {
+      "kind": "tokenize",
+      "start": 0,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 0.077,
+      "end_s": 5.416,
+      "received_s": 5.514
+    },
+    {
+      "kind": "tokenize",
+      "start": 250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 0.834,
+      "end_s": 3.697,
+      "received_s": 4.391
+    },
+    {
+      "kind": "tokenize",
+      "start": 500,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 0.085,
+      "end_s": 5.7,
+      "received_s": 5.828
+    },
+    {
+      "kind": "tokenize",
+      "start": 750,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 0.089,
+      "end_s": 5.734,
+      "received_s": 5.919
+    },
+    {
+      "kind": "tokenize",
+      "start": 1000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 0.5,
+      "end_s": 3.451,
+      "received_s": 3.828
+    },
+    {
+      "kind": "tokenize",
+      "start": 1250,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 0.783,
+      "end_s": 3.577,
+      "received_s": 4.024
+    },
+    {
+      "kind": "tokenize",
+      "start": 1500,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 0.783,
+      "end_s": 3.611,
+      "received_s": 4.235
+    },
+    {
+      "kind": "tokenize",
+      "start": 1750,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 0.105,
+      "end_s": 5.815,
+      "received_s": 5.985
+    },
+    {
+      "kind": "tokenize",
+      "start": 2000,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 5.419,
+      "end_s": 11.971,
+      "received_s": 12.095
+    },
+    {
+      "kind": "tokenize",
+      "start": 2250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 3.699,
+      "end_s": 6.595,
+      "received_s": 7.219
+    },
+    {
+      "kind": "tokenize",
+      "start": 2500,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 5.703,
+      "end_s": 12.434,
+      "received_s": 12.649
+    },
+    {
+      "kind": "tokenize",
+      "start": 2750,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 5.737,
+      "end_s": 12.324,
+      "received_s": 12.378
+    },
+    {
+      "kind": "tokenize",
+      "start": 3000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 3.453,
+      "end_s": 6.303,
+      "received_s": 6.614
+    },
+    {
+      "kind": "tokenize",
+      "start": 3250,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 3.579,
+      "end_s": 6.466,
+      "received_s": 6.82
+    },
+    {
+      "kind": "tokenize",
+      "start": 3500,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 3.613,
+      "end_s": 6.58,
+      "received_s": 7.01
+    },
+    {
+      "kind": "tokenize",
+      "start": 3750,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 5.819,
+      "end_s": 12.462,
+      "received_s": 13.159
+    },
+    {
+      "kind": "tokenize",
+      "start": 4000,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 6.582,
+      "end_s": 9.528,
+      "received_s": 10.129
+    },
+    {
+      "kind": "tokenize",
+      "start": 4250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 6.305,
+      "end_s": 9.197,
+      "received_s": 9.421
+    },
+    {
+      "kind": "tokenize",
+      "start": 4500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 6.467,
+      "end_s": 9.36,
+      "received_s": 9.745
+    },
+    {
+      "kind": "tokenize",
+      "start": 4750,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 6.597,
+      "end_s": 9.466,
+      "received_s": 9.961
+    },
+    {
+      "kind": "tokenize",
+      "start": 5000,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 11.973,
+      "end_s": 18.721,
+      "received_s": 19.25
+    },
+    {
+      "kind": "tokenize",
+      "start": 5250,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 12.438,
+      "end_s": 18.959,
+      "received_s": 19.376
+    },
+    {
+      "kind": "tokenize",
+      "start": 5500,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 12.327,
+      "end_s": 19.252,
+      "received_s": 19.979
+    },
+    {
+      "kind": "tokenize",
+      "start": 5750,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 12.465,
+      "end_s": 19.192,
+      "received_s": 19.475
+    },
+    {
+      "kind": "tokenize",
+      "start": 6000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 9.2,
+      "end_s": 12.103,
+      "received_s": 12.319
+    },
+    {
+      "kind": "tokenize",
+      "start": 6250,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 9.53,
+      "end_s": 12.434,
+      "received_s": 13.0
+    },
+    {
+      "kind": "tokenize",
+      "start": 6500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 9.363,
+      "end_s": 12.344,
+      "received_s": 12.579
+    },
+    {
+      "kind": "tokenize",
+      "start": 6750,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 9.468,
+      "end_s": 12.428,
+      "received_s": 12.827
+    },
+    {
+      "kind": "tokenize",
+      "start": 7000,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 12.347,
+      "end_s": 15.231,
+      "received_s": 15.589
+    },
+    {
+      "kind": "tokenize",
+      "start": 7250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 12.105,
+      "end_s": 15.115,
+      "received_s": 15.412
+    },
+    {
+      "kind": "tokenize",
+      "start": 7500,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 12.436,
+      "end_s": 15.416,
+      "received_s": 15.868
+    },
+    {
+      "kind": "tokenize",
+      "start": 7750,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 12.43,
+      "end_s": 15.454,
+      "received_s": 16.064
+    },
+    {
+      "kind": "tokenize",
+      "start": 8000,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 18.725,
+      "end_s": 25.66,
+      "received_s": 25.81
+    },
+    {
+      "kind": "tokenize",
+      "start": 8250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 15.117,
+      "end_s": 18.027,
+      "received_s": 18.319
+    },
+    {
+      "kind": "tokenize",
+      "start": 8500,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 19.255,
+      "end_s": 25.871,
+      "received_s": 25.98
+    },
+    {
+      "kind": "tokenize",
+      "start": 8750,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 15.251,
+      "end_s": 18.114,
+      "received_s": 18.624
+    },
+    {
+      "kind": "tokenize",
+      "start": 9000,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 18.962,
+      "end_s": 25.832,
+      "received_s": 25.907
+    },
+    {
+      "kind": "tokenize",
+      "start": 9250,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 19.195,
+      "end_s": 25.962,
+      "received_s": 26.126
+    },
+    {
+      "kind": "tokenize",
+      "start": 9500,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 15.456,
+      "end_s": 18.346,
+      "received_s": 18.922
+    },
+    {
+      "kind": "tokenize",
+      "start": 9750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 15.418,
+      "end_s": 18.428,
+      "received_s": 19.158
+    },
+    {
+      "kind": "tokenize",
+      "start": 10000,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 18.116,
+      "end_s": 21.112,
+      "received_s": 21.439
+    },
+    {
+      "kind": "tokenize",
+      "start": 10250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 18.029,
+      "end_s": 20.925,
+      "received_s": 21.176
+    },
+    {
+      "kind": "tokenize",
+      "start": 10500,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 18.43,
+      "end_s": 21.319,
+      "received_s": 22.226
+    },
+    {
+      "kind": "tokenize",
+      "start": 10750,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 18.348,
+      "end_s": 21.18,
+      "received_s": 21.724
+    },
+    {
+      "kind": "tokenize",
+      "start": 11000,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 21.114,
+      "end_s": 24.09,
+      "received_s": 24.591
+    },
+    {
+      "kind": "tokenize",
+      "start": 11250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 20.927,
+      "end_s": 23.808,
+      "received_s": 24.022
+    },
+    {
+      "kind": "tokenize",
+      "start": 11500,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 21.182,
+      "end_s": 24.047,
+      "received_s": 24.387
+    },
+    {
+      "kind": "tokenize",
+      "start": 11750,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 25.835,
+      "end_s": 32.44,
+      "received_s": 32.695
+    },
+    {
+      "kind": "tokenize",
+      "start": 12000,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 21.321,
+      "end_s": 24.179,
+      "received_s": 24.766
+    },
+    {
+      "kind": "tokenize",
+      "start": 12250,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 25.664,
+      "end_s": 32.226,
+      "received_s": 32.321
+    },
+    {
+      "kind": "tokenize",
+      "start": 12500,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 25.965,
+      "end_s": 32.277,
+      "received_s": 32.413
+    },
+    {
+      "kind": "tokenize",
+      "start": 12750,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 25.874,
+      "end_s": 32.389,
+      "received_s": 32.507
+    },
+    {
+      "kind": "tokenize",
+      "start": 13000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 23.81,
+      "end_s": 26.704,
+      "received_s": 27.031
+    },
+    {
+      "kind": "tokenize",
+      "start": 13250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 24.05,
+      "end_s": 26.901,
+      "received_s": 27.164
+    },
+    {
+      "kind": "tokenize",
+      "start": 13500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 24.092,
+      "end_s": 26.971,
+      "received_s": 27.385
+    },
+    {
+      "kind": "tokenize",
+      "start": 13750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 24.181,
+      "end_s": 27.105,
+      "received_s": 27.637
+    },
+    {
+      "kind": "tokenize",
+      "start": 14000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 26.706,
+      "end_s": 29.565,
+      "received_s": 29.822
+    },
+    {
+      "kind": "tokenize",
+      "start": 14250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 26.903,
+      "end_s": 29.783,
+      "received_s": 30.025
+    },
+    {
+      "kind": "tokenize",
+      "start": 14500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 26.973,
+      "end_s": 29.854,
+      "received_s": 30.267
+    },
+    {
+      "kind": "tokenize",
+      "start": 14750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 27.107,
+      "end_s": 30.009,
+      "received_s": 30.597
+    },
+    {
+      "kind": "tokenize",
+      "start": 15000,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 32.23,
+      "end_s": 39.119,
+      "received_s": 39.816
+    },
+    {
+      "kind": "tokenize",
+      "start": 15250,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 32.444,
+      "end_s": 39.134,
+      "received_s": 39.908
+    },
+    {
+      "kind": "tokenize",
+      "start": 15500,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 32.393,
+      "end_s": 38.97,
+      "received_s": 39.655
+    },
+    {
+      "kind": "tokenize",
+      "start": 15750,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 32.28,
+      "end_s": 39.175,
+      "received_s": 40.037
+    },
+    {
+      "kind": "tokenize",
+      "start": 16000,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 29.856,
+      "end_s": 32.761,
+      "received_s": 33.6
+    },
+    {
+      "kind": "tokenize",
+      "start": 16250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 29.567,
+      "end_s": 32.526,
+      "received_s": 33.181
+    },
+    {
+      "kind": "tokenize",
+      "start": 16500,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 29.785,
+      "end_s": 32.575,
+      "received_s": 33.403
+    },
+    {
+      "kind": "tokenize",
+      "start": 16750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 30.011,
+      "end_s": 32.964,
+      "received_s": 33.817
+    },
+    {
+      "kind": "tokenize",
+      "start": 17000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 32.528,
+      "end_s": 35.436,
+      "received_s": 35.62
+    },
+    {
+      "kind": "tokenize",
+      "start": 17250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 32.577,
+      "end_s": 35.565,
+      "received_s": 35.863
+    },
+    {
+      "kind": "tokenize",
+      "start": 17500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 32.763,
+      "end_s": 35.655,
+      "received_s": 36.122
+    },
+    {
+      "kind": "tokenize",
+      "start": 17750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 32.966,
+      "end_s": 35.85,
+      "received_s": 36.343
+    },
+    {
+      "kind": "tokenize",
+      "start": 18000,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 39.124,
+      "end_s": 45.862,
+      "received_s": 46.175
+    },
+    {
+      "kind": "tokenize",
+      "start": 18250,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 39.178,
+      "end_s": 45.622,
+      "received_s": 45.722
+    },
+    {
+      "kind": "tokenize",
+      "start": 18500,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 39.136,
+      "end_s": 45.814,
+      "received_s": 45.902
+    },
+    {
+      "kind": "tokenize",
+      "start": 18750,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 38.973,
+      "end_s": 45.839,
+      "received_s": 46.062
+    },
+    {
+      "kind": "tokenize",
+      "start": 19000,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 35.567,
+      "end_s": 38.455,
+      "received_s": 39.189
+    },
+    {
+      "kind": "tokenize",
+      "start": 19250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 35.438,
+      "end_s": 38.271,
+      "received_s": 38.96
+    },
+    {
+      "kind": "tokenize",
+      "start": 19500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 35.657,
+      "end_s": 38.499,
+      "received_s": 39.39
+    },
+    {
+      "kind": "tokenize",
+      "start": 19750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 35.852,
+      "end_s": 38.674,
+      "received_s": 39.549
+    },
+    {
+      "kind": "tokenize",
+      "start": 20000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 38.273,
+      "end_s": 41.227,
+      "received_s": 41.428
+    },
+    {
+      "kind": "tokenize",
+      "start": 20250,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 38.501,
+      "end_s": 41.404,
+      "received_s": 41.62
+    },
+    {
+      "kind": "tokenize",
+      "start": 20500,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 38.458,
+      "end_s": 41.425,
+      "received_s": 41.825
+    },
+    {
+      "kind": "tokenize",
+      "start": 20750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 38.676,
+      "end_s": 41.612,
+      "received_s": 42.12
+    },
+    {
+      "kind": "tokenize",
+      "start": 21000,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 41.614,
+      "end_s": 44.479,
+      "received_s": 45.076
+    },
+    {
+      "kind": "tokenize",
+      "start": 21250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 41.255,
+      "end_s": 44.169,
+      "received_s": 44.343
+    },
+    {
+      "kind": "tokenize",
+      "start": 21500,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 41.428,
+      "end_s": 44.329,
+      "received_s": 44.583
+    },
+    {
+      "kind": "tokenize",
+      "start": 21750,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 41.406,
+      "end_s": 44.312,
+      "received_s": 44.831
+    },
+    {
+      "kind": "tokenize",
+      "start": 22000,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 45.843,
+      "end_s": 52.355,
+      "received_s": 52.766
+    },
+    {
+      "kind": "tokenize",
+      "start": 22250,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 45.865,
+      "end_s": 52.513,
+      "received_s": 52.948
+    },
+    {
+      "kind": "tokenize",
+      "start": 22500,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 45.625,
+      "end_s": 52.344,
+      "received_s": 52.662
+    },
+    {
+      "kind": "tokenize",
+      "start": 22750,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 45.818,
+      "end_s": 52.279,
+      "received_s": 52.455
+    },
+    {
+      "kind": "tokenize",
+      "start": 23000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 44.171,
+      "end_s": 47.087,
+      "received_s": 47.238
+    },
+    {
+      "kind": "tokenize",
+      "start": 23250,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 44.482,
+      "end_s": 47.413,
+      "received_s": 47.942
+    },
+    {
+      "kind": "tokenize",
+      "start": 23500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 44.314,
+      "end_s": 47.368,
+      "received_s": 47.722
+    },
+    {
+      "kind": "tokenize",
+      "start": 23750,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 44.331,
+      "end_s": 47.266,
+      "received_s": 47.475
+    },
+    {
+      "kind": "tokenize",
+      "start": 24000,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 47.267,
+      "end_s": 50.264,
+      "received_s": 50.646
+    },
+    {
+      "kind": "tokenize",
+      "start": 24250,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 47.089,
+      "end_s": 49.999,
+      "received_s": 50.436
+    },
+    {
+      "kind": "tokenize",
+      "start": 24500,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 47.415,
+      "end_s": 50.316,
+      "received_s": 50.9
+    },
+    {
+      "kind": "tokenize",
+      "start": 24750,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 47.37,
+      "end_s": 50.424,
+      "received_s": 51.105
+    },
+    {
+      "kind": "tokenize",
+      "start": 25000,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 52.347,
+      "end_s": 59.202,
+      "received_s": 59.672
+    },
+    {
+      "kind": "tokenize",
+      "start": 25250,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 52.358,
+      "end_s": 59.242,
+      "received_s": 59.895
+    },
+    {
+      "kind": "tokenize",
+      "start": 25500,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 52.283,
+      "end_s": 59.263,
+      "received_s": 59.977
+    },
+    {
+      "kind": "tokenize",
+      "start": 25750,
+      "n": 250,
+      "worker": "laptopA-cpu-3",
+      "laptop": "laptopA",
+      "start_s": 52.601,
+      "end_s": 59.611,
+      "received_s": 60.224
+    },
+    {
+      "kind": "tokenize",
+      "start": 26000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 50.001,
+      "end_s": 52.987,
+      "received_s": 53.139
+    },
+    {
+      "kind": "tokenize",
+      "start": 26250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 50.266,
+      "end_s": 53.153,
+      "received_s": 53.323
+    },
+    {
+      "kind": "tokenize",
+      "start": 26500,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 50.318,
+      "end_s": 53.162,
+      "received_s": 53.505
+    },
+    {
+      "kind": "tokenize",
+      "start": 26750,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 50.426,
+      "end_s": 53.342,
+      "received_s": 53.696
+    },
+    {
+      "kind": "tokenize",
+      "start": 27000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 52.989,
+      "end_s": 55.989,
+      "received_s": 56.173
+    },
+    {
+      "kind": "tokenize",
+      "start": 27250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 53.154,
+      "end_s": 56.143,
+      "received_s": 56.464
+    },
+    {
+      "kind": "tokenize",
+      "start": 27500,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 53.344,
+      "end_s": 56.314,
+      "received_s": 56.564
+    },
+    {
+      "kind": "tokenize",
+      "start": 27750,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 53.163,
+      "end_s": 56.09,
+      "received_s": 56.339
+    },
+    {
+      "kind": "tokenize",
+      "start": 28000,
+      "n": 250,
+      "worker": "laptopA-cpu-0",
+      "laptop": "laptopA",
+      "start_s": 59.267,
+      "end_s": 66.183,
+      "received_s": 66.213
+    },
+    {
+      "kind": "tokenize",
+      "start": 28250,
+      "n": 250,
+      "worker": "laptopA-cpu-2",
+      "laptop": "laptopA",
+      "start_s": 59.205,
+      "end_s": 66.227,
+      "received_s": 66.263
+    },
+    {
+      "kind": "tokenize",
+      "start": 28500,
+      "n": 250,
+      "worker": "laptopA-cpu-1",
+      "laptop": "laptopA",
+      "start_s": 59.246,
+      "end_s": 66.12,
+      "received_s": 66.166
+    },
+    {
+      "kind": "tokenize",
+      "start": 28750,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 59.571,
+      "end_s": 62.436,
+      "received_s": 62.569
+    },
+    {
+      "kind": "tokenize",
+      "start": 29000,
+      "n": 250,
+      "worker": "laptopB-cpu-1",
+      "laptop": "laptopB",
+      "start_s": 55.991,
+      "end_s": 58.936,
+      "received_s": 59.068
+    },
+    {
+      "kind": "tokenize",
+      "start": 29250,
+      "n": 250,
+      "worker": "laptopB-cpu-2",
+      "laptop": "laptopB",
+      "start_s": 56.145,
+      "end_s": 59.137,
+      "received_s": 59.823
+    },
+    {
+      "kind": "tokenize",
+      "start": 29500,
+      "n": 250,
+      "worker": "laptopB-cpu-3",
+      "laptop": "laptopB",
+      "start_s": 56.093,
+      "end_s": 59.022,
+      "received_s": 59.583
+    },
+    {
+      "kind": "tokenize",
+      "start": 29750,
+      "n": 250,
+      "worker": "laptopB-cpu-0",
+      "laptop": "laptopB",
+      "start_s": 56.316,
+      "end_s": 59.361,
+      "received_s": 60.183
+    }
+  ],
+  "type": "bench",
+  "warmup_s": 69.07,
+  "warmup_per_worker": {
+    "laptopC-cpu-2": {
+      "seconds": 3.18
+    },
+    "laptopC-cpu-1": {
+      "seconds": 3.3
+    },
+    "laptopC-cpu-3": {
+      "seconds": 3.37
+    },
+    "laptopC-cpu-0": {
+      "seconds": 3.69
+    },
+    "laptopB-cpu-0": {
+      "seconds": 8.92
+    },
+    "laptopB-cpu-1": {
+      "seconds": 8.92
+    },
+    "laptopB-cpu-2": {
+      "seconds": 8.88
+    },
+    "laptopB-cpu-3": {
+      "seconds": 8.96
+    },
+    "laptopC-gpu": {
+      "seconds": 13.2
+    },
+    "laptopA-cpu-1": {
+      "seconds": 21.6
+    },
+    "laptopA-cpu-2": {
+      "seconds": 21.67
+    },
+    "laptopA-cpu-0": {
+      "seconds": 21.79
+    },
+    "laptopA-cpu-3": {
+      "seconds": 21.79
+    },
+    "laptopB-gpu": {
+      "seconds": 33.62
+    },
+    "laptopA-gpu": {
+      "seconds": 69.05
+    }
+  },
+  "created": "2026-10-06T09:38:21"
+}

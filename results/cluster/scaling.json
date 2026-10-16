@@ -1,0 +1,66 @@
+{
+  "laptops": [
+    "laptopA",
+    "laptopB",
+    "laptopC"
+  ],
+  "limit": 30000,
+  "precision": "fp16",
+  "chunk_size": 250,
+  "runs": [
+    "bench-30k-laptopA",
+    "bench-30k-laptopB",
+    "bench-30k-laptopC",
+    "bench-30k-laptopA+laptopB",
+    "bench-30k-laptopA+laptopB+laptopC"
+  ],
+  "warmup_s": 69.07,
+  "warmup_per_worker": {
+    "laptopC-cpu-2": {
+      "seconds": 3.18
+    },
+    "laptopC-cpu-1": {
+      "seconds": 3.3
+    },
+    "laptopC-cpu-3": {
+      "seconds": 3.37
+    },
+    "laptopC-cpu-0": {
+      "seconds": 3.69
+    },
+    "laptopB-cpu-0": {
+      "seconds": 8.92
+    },
+    "laptopB-cpu-1": {
+      "seconds": 8.92
+    },
+    "laptopB-cpu-2": {
+      "seconds": 8.88
+    },
+    "laptopB-cpu-3": {
+      "seconds": 8.96
+    },
+    "laptopC-gpu": {
+      "seconds": 13.2
+    },
+    "laptopA-cpu-1": {
+      "seconds": 21.6
+    },
+    "laptopA-cpu-2": {
+      "seconds": 21.67
+    },
+    "laptopA-cpu-0": {
+      "seconds": 21.79
+    },
+    "laptopA-cpu-3": {
+      "seconds": 21.79
+    },
+    "laptopB-gpu": {
+      "seconds": 33.62
+    },
+    "laptopA-gpu": {
+      "seconds": 69.05
+    }
+  },
+  "created": "2026-10-06T09:40:22"
+}

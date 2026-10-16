@@ -1,0 +1,152 @@
+{
+  "generated_at": "2026-10-06T09:45:53",
+  "charts": [
+    {
+      "file": "cluster/scaling.png",
+      "title": "Speedup on 1 to n laptops",
+      "caption": "30,000 abstracts embedded and tokenized on growing sets of laptops. All 3 laptops: 3.05× faster than laptopA alone (90% of the ideal for these GPUs)."
+    }
+  ],
+  "scaling": {
+    "laptops": [
+      "laptopA",
+      "laptopB",
+      "laptopC"
+    ],
+    "limit": 30000,
+    "precision": "fp16",
+    "chunk_size": 250,
+    "warmup_s": 69.07,
+    "rows": [
+      {
+        "laptops": [
+          "laptopA"
+        ],
+        "n": 1,
+        "seconds": 337.58,
+        "docs_per_s": 88.9,
+        "embed_stage_s": 337.58,
+        "tokenize_stage_s": 200.72,
+        "received_mb": 118.2,
+        "run": "bench-30k-laptopA",
+        "ideal_seconds": 337.58,
+        "ideal_speedup": 1.0,
+        "speedup": 1.0,
+        "efficiency": 1.0,
+        "naive_efficiency": 1.0
+      },
+      {
+        "laptops": [
+          "laptopB"
+        ],
+        "n": 1,
+        "seconds": 229.61,
+        "docs_per_s": 130.7,
+        "embed_stage_s": 229.61,
+        "tokenize_stage_s": 83.22,
+        "received_mb": 118.2,
+        "run": "bench-30k-laptopB",
+        "ideal_seconds": 229.61,
+        "ideal_speedup": 1.47,
+        "speedup": 1.47,
+        "efficiency": 1.0,
+        "naive_efficiency": 1.47
+      },
+      {
+        "laptops": [
+          "laptopC"
+        ],
+        "n": 1,
+        "seconds": 372.67,
+        "docs_per_s": 80.5,
+        "embed_stage_s": 372.67,
+        "tokenize_stage_s": 40.78,
+        "received_mb": 118.2,
+        "run": "bench-30k-laptopC",
+        "ideal_seconds": 372.67,
+        "ideal_speedup": 0.91,
+        "speedup": 0.91,
+        "efficiency": 1.0,
+        "naive_efficiency": 0.906
+      },
+      {
+        "laptops": [
+          "laptopA",
+          "laptopB"
+        ],
+        "n": 2,
+        "seconds": 140.02,
+        "docs_per_s": 214.2,
+        "embed_stage_s": 140.02,
+        "tokenize_stage_s": 66.26,
+        "received_mb": 118.2,
+        "run": "bench-30k-laptopA+laptopB",
+        "ideal_seconds": 136.66,
+        "ideal_speedup": 2.47,
+        "speedup": 2.41,
+        "efficiency": 0.976,
+        "naive_efficiency": 1.205,
+        "serial_fraction": 0.017
+      },
+      {
+        "laptops": [
+          "laptopA",
+          "laptopB",
+          "laptopC"
+        ],
+        "n": 3,
+        "seconds": 110.68,
+        "docs_per_s": 271.0,
+        "embed_stage_s": 110.68,
+        "tokenize_stage_s": 33.29,
+        "received_mb": 118.2,
+        "run": "bench-30k-laptopA+laptopB+laptopC",
+        "ideal_seconds": 99.99,
+        "ideal_speedup": 3.38,
+        "speedup": 3.05,
+        "efficiency": 0.903,
+        "naive_efficiency": 1.017,
+        "serial_fraction": 0.045
+      }
+    ]
+  },
+  "precision_check": {
+    "rows": [
+      {
+        "method": "bge",
+        "query_set": "exact",
+        "mrr@10_fp32": 0.498,
+        "mrr@10_fp16": 0.4983,
+        "difference": 0.0003,
+        "identical_ranks": 0.9757
+      },
+      {
+        "method": "bge",
+        "query_set": "paraphrased",
+        "mrr@10_fp32": 0.4615,
+        "mrr@10_fp16": 0.4617,
+        "difference": 0.0002,
+        "identical_ranks": 0.9767
+      },
+      {
+        "method": "specter",
+        "query_set": "exact",
+        "mrr@10_fp32": 0.2326,
+        "mrr@10_fp16": 0.2323,
+        "difference": -0.0003,
+        "identical_ranks": 0.9602
+      },
+      {
+        "method": "specter",
+        "query_set": "paraphrased",
+        "mrr@10_fp32": 0.1969,
+        "mrr@10_fp16": 0.1966,
+        "difference": -0.0002,
+        "identical_ranks": 0.9699
+      }
+    ],
+    "tolerance": 0.005,
+    "fp16_ok": true,
+    "created": "2026-10-05T12:49:15"
+  }
+}
