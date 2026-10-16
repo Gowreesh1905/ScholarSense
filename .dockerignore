@@ -1,0 +1,11 @@
+# Local `docker build -f deploy/Dockerfile .` only (the Space gets a curated file list).
+.git
+**/node_modules
+**/__pycache__
+.cache
+cluster/data
+cluster/output
+frontend/dist
+notebooks
+team
+eval
