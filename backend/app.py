@@ -110,8 +110,17 @@ def results():
 # check_dir=False: the server starts even before the evaluation creates results/.
 app.mount("/api/results/files", StaticFiles(directory=RESULTS_DIR, check_dir=False), name="results-files")
 
+# The built website (`npm run build` in frontend/), so one server serves both the site and
+# the API on the same address. Mounted last: the /api routes above take precedence.
+FRONTEND_DIST = ROOT / "frontend" / "dist"
+if FRONTEND_DIST.is_dir():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
+
 
 if __name__ == "__main__":
+    import os
+
     import uvicorn
 
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=False)
+    uvicorn.run("app:app", host=os.environ.get("HOST", "127.0.0.1"), port=int(os.environ.get("PORT", "8000")),
+                reload=False)

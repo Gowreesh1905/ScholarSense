@@ -74,9 +74,28 @@ class SearchEngine:
             "727": {"label": f"{len(self.papers)} papers", "papers": self.papers, "searchers": self.searchers},
         }
         self._build_scale_corpus()
+        self._warm_up()
         self._log(f"[engine] Ready: {', '.join(self.searchers)}"
                   f"{' + aspect' if self.aspect_searcher else ''}"
                   f"{' + scale corpus' if 'scale' in self.corpora else ''}")
+
+    def _warm_up(self):
+        """Run one throwaway query per method, so lazily loaded models (the hybrid's
+        cross-encoder, the query side of BGE/SPECTER) load now and not on a visitor's
+        first search."""
+        start = time.perf_counter()
+        for corpus in self.corpora.values():
+            for key, searcher in corpus["searchers"].items():
+                try:
+                    searcher.search("warm up the models", 1)
+                except Exception:
+                    self._log(f"[engine] warm-up of {key} failed\n{traceback.format_exc()}")
+        if self.aspect_searcher:
+            try:
+                self.aspect_searcher.search("warm up the models", self.aspect_names[0], 1)
+            except Exception:
+                self._log(f"[engine] warm-up of aspect search failed\n{traceback.format_exc()}")
+        self._log(f"[engine] Warmed up in {time.perf_counter() - start:.1f}s")
 
     def _build_scale_corpus(self):
         try:
