@@ -23,8 +23,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from deploy.bundle import index_files, space_files  # noqa: E402
 
 
+TEXT_SUFFIXES = {".py", ".md", ".txt", ".json", ".ts", ".tsx", ".css", ".html", ".svg", ".csv", ""}
+
+
 def mb(paths) -> float:
     return sum(p.stat().st_size for p, _ in paths) / 1e6
+
+
+def upload_source(path: Path):
+    """Text files with Linux line endings (Git on Windows may have given them CRLF, and a
+    Dockerfile with stray \\r breaks on Hugging Face's Linux builders); others as they are."""
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        return path.read_bytes().replace(b"\r\n", b"\n")
+    return str(path)
 
 
 def main() -> None:
@@ -63,7 +74,7 @@ def main() -> None:
 
     print(f"\nUploading the code to the Space {space_id} ...", flush=True)
     api.create_repo(space_id, repo_type="space", space_sdk="docker", exist_ok=True)
-    ops = [CommitOperationAdd(path_in_repo=r, path_or_fileobj=str(p)) for p, r in code]
+    ops = [CommitOperationAdd(path_in_repo=r, path_or_fileobj=upload_source(p)) for p, r in code]
     ops.append(CommitOperationAdd(path_in_repo="deploy/index_repo.txt", path_or_fileobj=dataset_id.encode()))
     api.create_commit(space_id, repo_type="space", operations=ops, commit_message="Deploy ScholarSense")
 
