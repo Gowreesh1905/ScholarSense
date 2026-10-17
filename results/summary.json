@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-04T14:38:34",
+  "generated_at": "2026-10-17T20:24:40",
   "device": "cuda",
   "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
   "corpus_size": 727,
@@ -13,6 +13,11 @@
       "n": 1030,
       "corpus": "masked",
       "description": "The same spans back-translated English-German-English, searched in the masked corpus. Changes the wording, so vocabulary mismatch appears."
+    },
+    "handwritten": {
+      "n": 20,
+      "corpus": "full",
+      "description": "Plain-language queries written by hand, avoiding the papers' technical terms, searched in the full corpus."
     }
   },
   "rows": [
@@ -39,6 +44,17 @@
       "latency_ms_p95": 3.33
     },
     {
+      "method": "tfidf",
+      "label": "TF-IDF",
+      "family": "lexical",
+      "color": "#d97706",
+      "query_set": "handwritten",
+      "mrr@10": 0.4002,
+      "recall@10": 0.4533,
+      "latency_ms_mean": 2.11,
+      "latency_ms_p95": 3.33
+    },
+    {
       "method": "bm25",
       "label": "BM25",
       "family": "lexical",
@@ -57,6 +73,17 @@
       "query_set": "paraphrased",
       "mrr@10": 0.4391,
       "recall@10": 0.6243,
+      "latency_ms_mean": 2.54,
+      "latency_ms_p95": 5.75
+    },
+    {
+      "method": "bm25",
+      "label": "BM25",
+      "family": "lexical",
+      "color": "#dc2626",
+      "query_set": "handwritten",
+      "mrr@10": 0.4071,
+      "recall@10": 0.5033,
       "latency_ms_mean": 2.54,
       "latency_ms_p95": 5.75
     },
@@ -83,6 +110,17 @@
       "latency_ms_p95": 1.39
     },
     {
+      "method": "word2vec",
+      "label": "Word2Vec (corpus-trained)",
+      "family": "static",
+      "color": "#0891b2",
+      "query_set": "handwritten",
+      "mrr@10": 0.4083,
+      "recall@10": 0.3242,
+      "latency_ms_mean": 0.89,
+      "latency_ms_p95": 1.39
+    },
+    {
       "method": "glove",
       "label": "GloVe 300d (pretrained)",
       "family": "static",
@@ -101,6 +139,17 @@
       "query_set": "paraphrased",
       "mrr@10": 0.2083,
       "recall@10": 0.3631,
+      "latency_ms_mean": 0.62,
+      "latency_ms_p95": 0.8
+    },
+    {
+      "method": "glove",
+      "label": "GloVe 300d (pretrained)",
+      "family": "static",
+      "color": "#059669",
+      "query_set": "handwritten",
+      "mrr@10": 0.3792,
+      "recall@10": 0.3583,
       "latency_ms_mean": 0.62,
       "latency_ms_p95": 0.8
     },
@@ -127,6 +176,17 @@
       "latency_ms_p95": 11.02
     },
     {
+      "method": "specter",
+      "label": "SPECTER",
+      "family": "contextual",
+      "color": "#9333ea",
+      "query_set": "handwritten",
+      "mrr@10": 0.3871,
+      "recall@10": 0.4183,
+      "latency_ms_mean": 9.37,
+      "latency_ms_p95": 11.02
+    },
+    {
       "method": "bge",
       "label": "BGE-base",
       "family": "contextual",
@@ -145,6 +205,17 @@
       "query_set": "paraphrased",
       "mrr@10": 0.4615,
       "recall@10": 0.666,
+      "latency_ms_mean": 10.58,
+      "latency_ms_p95": 18.2
+    },
+    {
+      "method": "bge",
+      "label": "BGE-base",
+      "family": "contextual",
+      "color": "#2563eb",
+      "query_set": "handwritten",
+      "mrr@10": 0.9,
+      "recall@10": 0.8683,
       "latency_ms_mean": 10.58,
       "latency_ms_p95": 18.2
     },
@@ -171,6 +242,17 @@
       "latency_ms_p95": 34.71
     },
     {
+      "method": "hybrid_rrf",
+      "label": "BM25 + BGE (RRF)",
+      "family": "hybrid",
+      "color": "#64748b",
+      "query_set": "handwritten",
+      "mrr@10": 0.7383,
+      "recall@10": 0.7192,
+      "latency_ms_mean": 17.2,
+      "latency_ms_p95": 34.71
+    },
+    {
       "method": "hybrid",
       "label": "Hybrid + re-rank",
       "family": "hybrid",
@@ -191,6 +273,50 @@
       "recall@10": 0.7165,
       "latency_ms_mean": 150.46,
       "latency_ms_p95": 200.73
+    },
+    {
+      "method": "hybrid",
+      "label": "Hybrid + re-rank",
+      "family": "hybrid",
+      "color": "#db2777",
+      "query_set": "handwritten",
+      "mrr@10": 0.8183,
+      "recall@10": 0.75,
+      "latency_ms_mean": 150.46,
+      "latency_ms_p95": 200.73
+    },
+    {
+      "method": "bm25_prf",
+      "label": "BM25 + query expansion",
+      "family": "lexical",
+      "color": "#ea580c",
+      "query_set": "exact",
+      "mrr@10": 0.4106,
+      "recall@10": 0.7019,
+      "latency_ms_mean": null,
+      "latency_ms_p95": null
+    },
+    {
+      "method": "bm25_prf",
+      "label": "BM25 + query expansion",
+      "family": "lexical",
+      "color": "#ea580c",
+      "query_set": "paraphrased",
+      "mrr@10": 0.3476,
+      "recall@10": 0.6117,
+      "latency_ms_mean": null,
+      "latency_ms_p95": null
+    },
+    {
+      "method": "bm25_prf",
+      "label": "BM25 + query expansion",
+      "family": "lexical",
+      "color": "#ea580c",
+      "query_set": "handwritten",
+      "mrr@10": 0.4979,
+      "recall@10": 0.525,
+      "latency_ms_mean": null,
+      "latency_ms_p95": null
     }
   ],
   "ablation": [
@@ -212,12 +338,12 @@
     {
       "file": "ablation.png",
       "title": "Ablation: fusion and re-ranking",
-      "caption": "MRR@10 of exact: BGE-base 0.498, BM25 + BGE (RRF) 0.560, Hybrid + re-rank 0.548; paraphrased: BGE-base 0.462, BM25 + BGE (RRF) 0.507, Hybrid + re-rank 0.506."
+      "caption": "MRR@10 of exact: BGE-base 0.498, BM25 + BGE (RRF) 0.560, Hybrid + re-rank 0.548; paraphrased: BGE-base 0.462, BM25 + BGE (RRF) 0.507, Hybrid + re-rank 0.506; handwritten: BGE-base 0.900, BM25 + BGE (RRF) 0.738, Hybrid + re-rank 0.818."
     },
     {
       "file": "results_by_set.png",
       "title": "MRR@10 by query set",
-      "caption": "MRR@10 for all methods. Best per query set: exact → BM25 + BGE (RRF) (0.560); paraphrased → BM25 + BGE (RRF) (0.507)."
+      "caption": "MRR@10 for all methods. Best per query set: exact → BM25 + BGE (RRF) (0.560); paraphrased → BM25 + BGE (RRF) (0.507); handwritten → BGE-base (0.900)."
     }
   ],
   "examples": [

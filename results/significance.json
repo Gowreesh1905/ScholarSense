@@ -142,5 +142,77 @@
     ],
     "significant": false,
     "n": 1030
+  },
+  "bge - bm25 [handwritten]": {
+    "diff": 0.4929,
+    "ci95": [
+      0.3188,
+      0.6663
+    ],
+    "significant": true,
+    "n": 20
+  },
+  "bm25 - tfidf [handwritten]": {
+    "diff": 0.0069,
+    "ci95": [
+      -0.0292,
+      0.0393
+    ],
+    "significant": false,
+    "n": 20
+  },
+  "hybrid_rrf - bge [handwritten]": {
+    "diff": -0.1617,
+    "ci95": [
+      -0.3108,
+      -0.0375
+    ],
+    "significant": true,
+    "n": 20
+  },
+  "hybrid_rrf - bm25 [handwritten]": {
+    "diff": 0.3313,
+    "ci95": [
+      0.1808,
+      0.4946
+    ],
+    "significant": true,
+    "n": 20
+  },
+  "hybrid - hybrid_rrf [handwritten]": {
+    "diff": 0.08,
+    "ci95": [
+      -0.0375,
+      0.225
+    ],
+    "significant": false,
+    "n": 20
+  },
+  "hybrid - bge [handwritten]": {
+    "diff": -0.0817,
+    "ci95": [
+      -0.1617,
+      -0.015
+    ],
+    "significant": true,
+    "n": 20
+  },
+  "bge - specter [handwritten]": {
+    "diff": 0.5129,
+    "ci95": [
+      0.3217,
+      0.6979
+    ],
+    "significant": true,
+    "n": 20
+  },
+  "glove - word2vec [handwritten]": {
+    "diff": -0.0292,
+    "ci95": [
+      -0.1917,
+      0.1292
+    ],
+    "significant": false,
+    "n": 20
   }
 }
